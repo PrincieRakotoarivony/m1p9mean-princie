@@ -1,0 +1,49 @@
+header{
+    background-color: brown;
+    min-height: 86px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.container-fluid{
+    margin-top: 10px;
+}
+
+#sidebar {
+    position: fixed;
+    z-index: 999;
+    width: 200px;
+    top: 86px;
+    left: 0;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    color: rgb(107, 102, 102);
+    padding: 10px;
+    padding-top: 15px;
+    height: 100%;
+    transition: 0.5s;
+}
+
+#sidebar .elmts > *{
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+
+#menu-close{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    cursor: pointer;
+}
+
+#menu-bars{
+    cursor: pointer;
+}
+
+

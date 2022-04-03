@@ -1,0 +1,12 @@
+<div class="login-form">
+    <div class="form-group">
+        <label for="nomUtilisateur">Nom d'utilisateur</label>
+        <input type="text" class="form-control" id="nomUtilisateur" [(ngModel)]="utilisateur.nomUtilisateur" >
+    </div>
+    <div class="form-group">
+        <label for="mdp">Mot de passe</label>
+        <input type="password" class="form-control" id="mdp" [(ngModel)]="utilisateur.mdp">
+    </div>
+    <br />
+    <button class="btn btn-outline-secondary" (click)="Login()">Se connecter</button>
+</div>

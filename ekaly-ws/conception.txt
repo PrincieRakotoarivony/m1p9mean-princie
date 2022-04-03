@@ -1,0 +1,36 @@
+utilisateur: {
+	_id,
+	nom,
+	prenom,
+	id_profile,
+	id_restaurant,
+	livreur: {},	
+}
+
+profile: {
+	_id,
+	profile
+}
+
+restaurant: {
+	_id,
+	name,
+	address
+}
+
+produit: {
+	_id,
+	id_restaurant
+	nom,
+	cout,
+	prix_vente,
+	qte
+}
+
+commande: {
+	_id,
+	id_utilisateur,
+	produit: {},
+	qte,
+	date_commande
+}
