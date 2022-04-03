@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
+import { NgPopupsService } from 'ng-popups';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent {
   title = 'ekaly';
-  faTimes = faTimes;
+  
+  
+  
 }

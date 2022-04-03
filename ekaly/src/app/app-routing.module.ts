@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from 'src/client/client/client.component';
+import { EkalyComponent } from 'src/ekaly/ekaly/ekaly.component';
 import { LivreurComponent } from 'src/livreur/livreur/livreur.component';
 import { LoginComponent } from 'src/login/login.component';
 import { RestaurantComponent } from 'src/restaurant/restaurant/restaurant.component';
-import { AuthGuardService } from 'src/services/auth-guard.service';
+import { AuthGuardClientService } from 'src/services/auth-guard-client.service';
+import { AuthGuardEkalyService } from 'src/services/auth-guard-ekaly.service';
+import { AuthGuardLivreurService } from 'src/services/auth-guard-livreur.service';
+import { AuthGuardRestaurantService } from 'src/services/auth-guard-restaurant.service';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/client',
-    pathMatch: 'full'
+    component: ClientComponent,
+    canActivate: [AuthGuardClientService]
   },
   {
     path: 'login',
@@ -19,17 +23,17 @@ const routes: Routes = [
   {
     path: 'restaurant',
     component: RestaurantComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'client',
-    component: ClientComponent,
-    canActivate: [AuthGuardService]
-  },
+    canActivate: [AuthGuardRestaurantService]
+  }, 
   {
     path: 'livreur',
     component: LivreurComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardLivreurService]
+  }, 
+  {
+    path: 'ekaly',
+    component: EkalyComponent,
+    canActivate: [AuthGuardEkalyService]
   }
 ];
 

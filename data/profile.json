@@ -1,0 +1,18 @@
+[
+    {
+        "_id": 1,
+        "nom": "Client"
+    },
+    {
+        "_id": 2,
+        "nom": "Restaurant"
+    },
+    {
+        "_id": 3,
+        "nom": "Livreur"
+    },
+    {
+        "_id": 4,
+        "nom": "Responsable E-kaly"
+    }
+]
