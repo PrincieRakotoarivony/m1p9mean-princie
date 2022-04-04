@@ -10,14 +10,15 @@ export class ToolsService {
   constructor() { }
 
   getRequestOptions(authorization = false){
-    const headers = new HttpHeaders()
+    var headers = new HttpHeaders()
     .set('Content-type', 'application/json');
     if(authorization)
-      headers.set('Authorization', 'Bearer '+localStorage.getItem(StorageService.TOKEN_KEY));
+      headers = headers.set('authorization', 'Bearer '+localStorage.getItem(StorageService.TOKEN_KEY));
 
     const options = {
       headers 
     }
+    console.log(options);
     return options;
   }
 }

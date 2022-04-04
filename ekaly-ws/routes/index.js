@@ -1,2 +1,3 @@
 const auth = require('./auth');
-module.exports = {auth}
+const produits = require('./produits');
+module.exports = {auth, produits}

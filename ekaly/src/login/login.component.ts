@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem(StorageService.TOKEN_KEY, data.token);
         localStorage.setItem(StorageService.ID_PROFILE_KEY, data.id_profile);
         localStorage.setItem(StorageService.ID_UTILISATEUR_KEY, data.id_utilisateur);
+        window.dispatchEvent(new CustomEvent('user:login'));
         this.router.navigateByUrl("/");
       } else{
         this.popupSertice.showError(res.meta.message);

@@ -30,5 +30,10 @@ async function login(nomUtilisateur, mdp){
     return result;
 }
 
+async function logout(token){
+    var db = await dbconnect.getDb();
+    var tokenCollection = db.collection('token'); 
+    await tokenCollection.deleteOne({token: token});
+}
 
-module.exports = {login}
+module.exports = {login, logout}

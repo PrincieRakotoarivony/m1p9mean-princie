@@ -47,5 +47,9 @@ export class AuthService {
     return this.http.post(url, utilisateur, this.toolsService.getRequestOptions());
   }
 
+  logout(){
+    const url = `${this.URL}/logout`;
+    return this.http.delete(url, this.toolsService.getRequestOptions(true));
+  }
 
 }

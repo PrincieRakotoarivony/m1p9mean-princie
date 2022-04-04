@@ -1,2 +1,3 @@
 const authService = require('./auth-service');
-module.exports = {authService}
+const produitsService = require('./produits-service');
+module.exports = {authService, produitsService}

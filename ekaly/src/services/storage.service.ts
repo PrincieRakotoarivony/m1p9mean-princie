@@ -10,4 +10,8 @@ export class StorageService {
 
   constructor() { }
   
+  isLoggedIn(){
+    const token = localStorage.getItem(StorageService.TOKEN_KEY);
+    return token !== null && token !== undefined;
+  }
 }

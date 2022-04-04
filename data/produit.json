@@ -1,0 +1,16 @@
+[
+    {
+        "_id": 1,
+        "nom": "Steak frite salade",
+        "id_restaurant": 1,
+        "cout": 12000,
+        "prix": 16000
+    },
+    {
+        "_id": 2,
+        "nom": "Ravitoto sy Hena-kisoa",
+        "id_restaurant": 1,
+        "cout": 13000,
+        "prix": 20000
+    }
+]
