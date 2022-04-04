@@ -9,6 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from 'src/login/login.component';
+import { ProduitsListComponent } from 'src/components/produits-list/produits-list.component';
+import { ProduitsListClientComponent } from 'src/client/produits-list-client/produits-list-client.component';
+import { ClientModule } from '../client/client/client.module';
+import { MyComponentsModule } from '../components/my-components/my-components.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import { LoginComponent } from 'src/login/login.component';
       }
     }),
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

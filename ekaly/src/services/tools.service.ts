@@ -18,7 +18,6 @@ export class ToolsService {
     const options = {
       headers 
     }
-    console.log(options);
     return options;
   }
 }

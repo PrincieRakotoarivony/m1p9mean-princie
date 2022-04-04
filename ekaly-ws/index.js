@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(express.static('public'))
 
 app.set('json replacer', function (key, value) {
     if (this[key] instanceof Date) {

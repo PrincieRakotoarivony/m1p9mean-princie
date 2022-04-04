@@ -3,7 +3,7 @@ const {produitsService} = require('../services');
 const {responseBuilder, tools} = require('../utils');
  const router = express.Router();
 
-router.get('/', async function(req, res){
+router.post('/', async function(req, res){
     produitsService
     .findProduits(req.body)
     .then((result) => {

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from 'src/client/client/client.component';
+import { ProduitsListClientComponent } from 'src/client/produits-list-client/produits-list-client.component';
+import { ProduitsListComponent } from 'src/components/produits-list/produits-list.component';
 import { EkalyComponent } from 'src/ekaly/ekaly/ekaly.component';
 import { LivreurComponent } from 'src/livreur/livreur/livreur.component';
 import { LoginComponent } from 'src/login/login.component';
@@ -13,7 +15,7 @@ import { AuthGuardRestaurantService } from 'src/services/auth-guard-restaurant.s
 const routes: Routes = [
   {
     path: '',
-    component: ClientComponent,
+    loadChildren: () => import('../client/client/client.module').then(mod => mod.ClientModule),
     canActivate: [AuthGuardClientService]
   },
   {
