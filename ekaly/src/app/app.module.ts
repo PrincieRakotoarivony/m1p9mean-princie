@@ -1,18 +1,19 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgPopupsModule } from 'ng-popups';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from 'src/login/login.component';
-import { ProduitsListComponent } from 'src/components/produits-list/produits-list.component';
-import { ProduitsListClientComponent } from 'src/client/produits-list-client/produits-list-client.component';
 import { ClientModule } from '../client/client/client.module';
-import { MyComponentsModule } from '../components/my-components/my-components.module';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { MyComponentsModule } from '../components/my-components/my-components.mo
     AppRoutingModule,
     ClientModule
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,40 @@
+.elmt{
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 25%);
+    border-radius: 3px;
+}
+
+.elmt:hover{
+    transform: scale(1.02);
+}
+
+.elmt img{
+    display: block;
+    width: 100%;
+}
+
+.elmt-content{
+    padding: 20px;
+}
+
+.elmt-content h1, .elmt-content h2{
+    font-weight: 400;
+}
+
+.elmt-content h1{
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    color: #7b7b7b;
+    margin: 0;
+}
+
+.elmt-content h2{
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.elmt-content p{
+    font-size: .8125rem;
+    line-height: 1.5;
+}

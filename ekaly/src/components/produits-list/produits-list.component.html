@@ -1,7 +1,3 @@
-<p>produits-list works!</p>
-<table>
-    <tr *ngFor="let p of produits">
-        <td>{{p.nom}}</td>
-        <td>{{p.prix}}</td>
-    </tr>
-</table>
+<div class="grid">
+    <app-produit-card *ngFor="let p of produits" [produit]="p" ></app-produit-card>
+</div>
