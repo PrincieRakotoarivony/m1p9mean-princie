@@ -63,6 +63,7 @@ export class ProduitFormComponent implements OnInit {
       this.popupService.showError(err.message);
     }
 
+    if(this.produit.visible === undefined) this.produit.visible = false;
     this.convertFile(success, error);
   }
 }

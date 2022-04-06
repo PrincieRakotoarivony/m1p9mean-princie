@@ -1,7 +1,13 @@
 <div class="elmt">
-    <img [src]="getUrl(produit.img)" />
+    <img [src]="produit.img" />
     <div class="elmt-content">
         <h1>{{produit.nom}}</h1>
-        <p>{{produit.prix | number:'1.2-2'}} Ar</p>
+        <h2>{{produit.prix | number:'1.2-2'}} Ar</h2>
+        <p>{{produit.description}}</p>
+    </div>
+    <div class="elmt-footer">
+        <button class="btn-edit btn btn-warning" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
+            <i class="fa fa-wrench" aria-hidden="true"></i>
+        </button>
     </div>
 </div>

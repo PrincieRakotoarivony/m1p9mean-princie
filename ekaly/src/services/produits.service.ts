@@ -22,6 +22,11 @@ export class ProduitsService {
     const url = `${this.URL}/save`
     return this.http.post(url, produit, this.toolsService.getRequestOptions(true));
   } 
+
+  updateProduit(produit: any){
+    const url = `${this.URL}/${produit._id}`
+    return this.http.put(url, produit, this.toolsService.getRequestOptions(true));
+  } 
   
   getProduit(id_produit: string){
     const url = `${this.URL}/${id_produit}`

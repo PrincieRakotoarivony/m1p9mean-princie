@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const {dbconnect} = require('../utils');
 const { PROFILE_RESTAURANT } = require('../utils/constantes');
 
@@ -24,6 +25,17 @@ async function saveProduit(utilisateur, produit){
     return result.insertedId;
 }
 
+async function updateProduit(utilisateur, id_produit, produit){
+    if(utilisateur.id_profile != PROFILE_RESTAURANT)
+        throw new Error("Pas d'autorisation");
+    
+    const db = await dbconnect.getDb();
+    const produitCollection = db.collection('produit');
+    const _id = new ObjectId(id_produit);
+    delete produit._id;
+    const result = await produitCollection.updateOne({_id}, {$set: produit});
+}
+
 async function findOneProduit(crt){
     const db = await dbconnect.getDb();
     const produitCollection = db.collection('produit');
@@ -32,4 +44,4 @@ async function findOneProduit(crt){
     return produit;
 }
 
-module.exports = {findProduits, saveProduit, findOneProduit};
+module.exports = {findProduits, saveProduit, findOneProduit, updateProduit};

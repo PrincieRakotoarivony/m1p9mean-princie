@@ -7,7 +7,7 @@ import { ProduitsListRestaurantComponent } from '../produits-list-restaurant/pro
 const routes: Routes = [
   {path: '', component: ProduitsListRestaurantComponent},
   {path: 'produit-add', component: ProduitAddComponent},
-  {path: '/produit-update/:id_produit', component: ProduitUpdateComponent}
+  {path: 'produit-update/:id_produit', component: ProduitUpdateComponent}
 ];
 
 @NgModule({

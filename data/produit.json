@@ -1,12 +1,12 @@
 [{
-  "_id": "1",
+  "_id": {"$oid":"624ddfe77aa1f9fe5ec75f44"},
   "nom": "Steak frite salade",
   "id_restaurant": "1",
   "cout": 12000,
   "prix": 16000,
   "img": "1.jpg"
 },{
-  "_id": "2",
+  "_id": {"$oid":"624ddff3b60fb4ef06432f81"},
   "nom": "Ravitoto sy Hena-kisoa",
   "id_restaurant": "1",
   "cout": 13000,
