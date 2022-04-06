@@ -26,8 +26,7 @@ export class LoginComponent implements OnInit {
       if(res.meta.status == 1){
         const data = res.data;
         localStorage.setItem(StorageService.TOKEN_KEY, data.token);
-        localStorage.setItem(StorageService.ID_PROFILE_KEY, data.id_profile);
-        localStorage.setItem(StorageService.ID_UTILISATEUR_KEY, data.id_utilisateur);
+        localStorage.setItem(StorageService.USER_KEY, JSON.stringify(data.user));
         window.dispatchEvent(new CustomEvent('user:login'));
         this.router.navigateByUrl("/");
       } else{

@@ -5,13 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
   public static TOKEN_KEY: string = "token";
-  public static ID_PROFILE_KEY: string = "id_profile";
-  public static ID_UTILISATEUR_KEY: string = "id_utilisateur";
+  public static USER_KEY: string = "user";
 
   constructor() { }
   
   isLoggedIn(){
     const token = localStorage.getItem(StorageService.TOKEN_KEY);
     return token !== null && token !== undefined;
+  }
+
+  getUser(){
+    const user = localStorage.getItem(StorageService.USER_KEY);
+    return user ? JSON.parse(user) : {};
   }
 }

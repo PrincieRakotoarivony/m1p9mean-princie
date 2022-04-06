@@ -11,7 +11,7 @@ export class ProduitsListComponent implements OnInit {
 
   search: string = "";
   pageNumber: number = 1;
-  @Input("nPerPage") nPerPage: number = 2;
+  @Input("nPerPage") nPerPage: number = 3;
   @Input("crt") crt: any = {};
   
   produits: any[] = [];

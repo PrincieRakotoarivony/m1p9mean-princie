@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from 'src/login/login.component';
 import { ClientModule } from '../client/client/client.module';
+import { RestaurantModule } from '../restaurant/restaurant/restaurant.module';
 
 registerLocaleData(localeFr);
 
@@ -38,7 +39,8 @@ registerLocaleData(localeFr);
     }),
     BrowserModule,
     AppRoutingModule,
-    ClientModule
+    ClientModule,
+    RestaurantModule
   ],
   providers: [{provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]

@@ -1,0 +1,8 @@
+db.createView(
+	"token_utilisateur",
+	"token",
+	[
+		{$lookup: {from: "utilisateur", localField: "id_utilisateur", foreignField: "_id", as: "utilisateur"}},
+		{$unwind: {path: "$utilisateur"}}
+	]
+)

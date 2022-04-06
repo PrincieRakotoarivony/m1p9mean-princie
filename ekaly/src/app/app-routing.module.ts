@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'restaurant',
-    component: RestaurantComponent,
+    loadChildren: () => import('../restaurant/restaurant/restaurant.module').then(mod => mod.RestaurantModule),
     canActivate: [AuthGuardRestaurantService]
   }, 
   {

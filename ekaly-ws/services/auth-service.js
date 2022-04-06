@@ -23,8 +23,7 @@ async function login(nomUtilisateur, mdp){
     var token = await saveToken(db, utilisateur);
     var result = {
         token: token, 
-        id_utilisateur: utilisateur._id, 
-        id_profile: utilisateur.id_profile
+        user: utilisateur
     };
     
     return result;
@@ -36,4 +35,12 @@ async function logout(token){
     await tokenCollection.deleteOne({token: token});
 }
 
-module.exports = {login, logout}
+async function findTokenUser(token){
+    var db = await dbconnect.getDb();
+    var tokenCollection = db.collection('token_utilisateur'); 
+    var result = await tokenCollection.findOne({token: token, date_expiration: {$gte: new Date()}});
+    if(!result) throw new Error("InvalidToken");
+    return result;
+}
+
+module.exports = {login, logout, findTokenUser}

@@ -31,6 +31,8 @@ export class AppComponent implements OnInit{
     const success = (res: any) => {
       if(res.meta.status == 1){
         window.dispatchEvent(new CustomEvent('user:logout'));
+        localStorage.removeItem(StorageService.TOKEN_KEY);
+        localStorage.removeItem(StorageService.USER_KEY);
         this.router.navigateByUrl("/login");
       } else {
         this.popupService.showError(res.meta.message);

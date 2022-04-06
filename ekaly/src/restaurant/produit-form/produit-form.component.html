@@ -1,0 +1,27 @@
+<form>
+    <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control" id="nom" [(ngModel)]="produit.nom" name="nom">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" [(ngModel)]="produit.description" name="description" rows="3"></textarea>
+      </div>
+    <div class="form-group">
+        <label for="cout">Coût</label>
+        <input type="text" class="form-control" id="cout" [(ngModel)]="produit.cout" name="cout">
+    </div>
+    <div class="form-group">
+        <label for="prix">Prix</label>
+        <input type="text" class="form-control" id="prix" [(ngModel)]="produit.prix" name="prix">
+    </div>
+
+    <div class="form-group">
+        <label for="img">Image</label>
+        <br />
+        <input type="file" class="form-control-file" id="img" (change)="onFileSelected($event)" name="img">
+      </div>
+    <br />
+    <button class="btn btn-secondary" (click)="submit()" >{{submitButtonName}}</button>
+</form>
+  

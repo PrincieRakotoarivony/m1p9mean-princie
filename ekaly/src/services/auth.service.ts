@@ -25,16 +25,17 @@ export class AuthService {
   
   constructor(private http: HttpClient, 
     private toolsService: ToolsService,
-    private router: Router) { }
+    private router: Router,
+    private storageService: StorageService) { }
 
   canActivateRoute(id_profile_match: string){
     const token = localStorage.getItem(StorageService.TOKEN_KEY);
-    const id_profile = localStorage.getItem(StorageService.ID_PROFILE_KEY);
-    if(token && id_profile){
-      if(id_profile == id_profile_match){
+    const user = this.storageService.getUser();
+    if(token){
+      if(user.id_profile == id_profile_match){
         return true;
       } else{
-        this.router.navigateByUrl(AuthService.paths_map[id_profile]);
+        this.router.navigateByUrl(AuthService.paths_map[user.id_profile]);
       }
     } else{
       this.router.navigateByUrl("/login");

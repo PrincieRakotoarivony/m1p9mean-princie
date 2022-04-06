@@ -17,4 +17,14 @@ export class ProduitsService {
     const url = `${this.URL}`
     return this.http.post(url, params, this.toolsService.getRequestOptions());
   }  
+
+  saveProduit(produit: any){
+    const url = `${this.URL}/save`
+    return this.http.post(url, produit, this.toolsService.getRequestOptions(true));
+  } 
+  
+  getProduit(id_produit: string){
+    const url = `${this.URL}/${id_produit}`
+    return this.http.get(url, this.toolsService.getRequestOptions());
+  }
 }
