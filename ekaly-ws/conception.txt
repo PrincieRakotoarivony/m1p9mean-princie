@@ -7,6 +7,13 @@ utilisateur: {
 	livreur: {},	
 }
 
+token: {
+	_id,
+	id_utilisateur,
+	token,
+	date_expiration
+}
+
 profile: {
 	_id,
 	profile

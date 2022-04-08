@@ -1,4 +1,5 @@
 const express = require('express');
+const { Utilisateur } = require('../models');
 const {authService} = require('../services');
 const {responseBuilder, tools} = require('../utils');
  const router = express.Router();
@@ -12,6 +13,16 @@ router.post('/login', async function(req, res){
     .catch((error) => {
         res.json(responseBuilder.error(error.message));
     })
+});
+
+router.post('/signUp', async function(req, res){
+    try{
+        const u = new Utilisateur(req.body);
+        await u.signUp({confirmMdp: req.body.confirmMdp});
+        res.json(responseBuilder.success(u._id));
+    } catch(err){
+        res.json(responseBuilder.error(err));
+    }
 });
 
 router.delete('/logout', async function(req, res){

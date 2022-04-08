@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const moment = require('moment');
+const mongoose = require('mongoose');
 const routes = require('./routes');
 
 const app = express();
@@ -16,7 +17,8 @@ app.set('json replacer', function (key, value) {
     }
     return value;
 });
-  
+
+mongoose.connect('mongodb://localhost:27017/ekaly', {useUnifiedTopology: true});
 
 function use_routes(routes){
     Object.keys(routes)
