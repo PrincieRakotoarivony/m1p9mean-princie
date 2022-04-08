@@ -11,6 +11,7 @@ header{
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
+    z-index: 999;
 }
 
 .container-fluid{
@@ -54,7 +55,7 @@ header{
     cursor: pointer;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1000px) {
     .container-fluid{
         padding-left: 210px;
     }

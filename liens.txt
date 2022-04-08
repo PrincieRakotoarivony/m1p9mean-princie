@@ -1,0 +1,4 @@
+https://mongoosejs.com/docs/documents.html#updating-using-save
+https://observablehq.com/@hugodf/mongodb-objectid-generator
+https://momentjscom.readthedocs.io/en/latest/moment/03-manipulating/01-add/
+http://www.sha1-online.com/

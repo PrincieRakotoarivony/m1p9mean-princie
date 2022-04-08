@@ -7,7 +7,8 @@ const ProduitSchema = new mongoose.Schema({
     cout: {type: Number, required: [true, "Coût obligatoire"], min: [0, "Le coût du plat doit etre positif"]},
     prix: {type: Number, required: [true, "Prix obligatoire"], min: [0, "Le prix du plat doit etre positif"]},
     img: String,
-    restaurant: {type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true}
+    restaurant: {type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true},
+    visible: {type: Boolean, default: true, required: true}
 });
 
 ProduitSchema.statics.getById = async function(id){
@@ -23,12 +24,14 @@ ProduitSchema.statics.getById = async function(id){
 ProduitSchema.statics.search = async function(params){
     const crt = params.crt ? params.crt : {};
     const searchRegex = new RegExp(`${params.search ? params.search: ""}`, "i");
-    const result = await Produit.find({$or: [{nom: searchRegex}, {description: searchRegex}], ...crt})
+    const where = {$or: [{nom: searchRegex}, {description: searchRegex}], ...crt};
+    const count = await Produit.count(where).exec();
+    const result = await Produit.find(where)
         .sort(params.sort ? params.sort : {})
         .limit(params.nbrPerPage)
         .skip((params.page - 1) * params.nbrPerPage)
         .exec();
-    return result;    
+    return {result, count};    
 }
 
 const Produit = mongoose.model('Produit', ProduitSchema);

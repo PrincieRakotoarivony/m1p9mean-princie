@@ -1,0 +1,15 @@
+<nav>
+    <ul class="pagination">
+        <li class="page-item" *ngIf="previous">
+        <a class="page-link"  aria-label="Previous" (click)="clickPage(page-1)">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+        </li>
+        <li *ngFor="let p of pages" class="page-item {{p.active ? 'active': ''}}"><a class="page-link" (click)="clickPage(p.page)">{{p.page}}</a></li>
+        <li class="page-item" *ngIf="next">
+        <a class="page-link"  aria-label="Next" (click)="clickPage(page+1)">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+        </li>
+    </ul>
+</nav>

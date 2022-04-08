@@ -11,7 +11,7 @@ import { StorageService } from 'src/services/storage.service';
 })
 export class LoginComponent implements OnInit {
   utilisateur: any = {
-    nomUtilisateur: 'princie7',
+    mail: 'eudoxierakoto4@gmail.com',
     mdp: '123456'
   }
   constructor(private authService: AuthService,

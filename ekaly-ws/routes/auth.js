@@ -6,8 +6,8 @@ const {responseBuilder, tools} = require('../utils');
 router.post('/login', async function(req, res){
     try{
         const u = new Utilisateur(req.body);
-        const token = await u.login();
-        res.json(responseBuilder.success(token));
+        const result = await u.login();
+        res.json(responseBuilder.success(result));
     } catch(err){
         res.json(responseBuilder.error(err));
     }

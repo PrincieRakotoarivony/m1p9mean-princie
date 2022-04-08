@@ -2,7 +2,7 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const { Produit, Utilisateur } = require('../models');
 const {responseBuilder, tools} = require('../utils');
-const { PROFILE_RESTAURANT } = require('../utils/constantes');
+const { constantes } = require('../utils');
  const router = express.Router();
 
 router.post('/', async function(req, res){
@@ -18,7 +18,7 @@ router.post('/save', async function(req, res){
     try{
         const token = tools.extractToken(req.headers.authorization);
         const u = await Utilisateur.findUser(token);
-        if(!u.profile.equals(PROFILE_RESTAURANT)) 
+        if(!u.profile.equals(constantes.PROFILE_RESTAURANT)) 
             throw new Error("Pas d'autorisation");
         const produit = new Produit(req.body);
         produit._id = new mongoose.Types.ObjectId();
@@ -44,9 +44,9 @@ router.put('/:id', async function(req, res){
         const token = tools.extractToken(req.headers.authorization);
         const u = await Utilisateur.findUser(token);
         const produit = await Produit.getById(req.params.id);
-        if(!u.profile.equals(PROFILE_RESTAURANT) || !u.restaurant.equals(produit.restaurant)) 
+        if(!u.profile.equals(constantes.PROFILE_RESTAURANT) || !u.restaurant.equals(produit.restaurant)) 
             throw new Error("Pas d'autorisation");
-        ["nom", "description", "cout", "prix", "img"].forEach(key => {
+        ["nom", "description", "cout", "prix", "img", "visible"].forEach(key => {
             produit[key] = req.body[key];
         });
         await produit.save();

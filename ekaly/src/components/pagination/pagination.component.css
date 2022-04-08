@@ -1,0 +1,9 @@
+.page-link{
+    color: rgb(126, 124, 124);
+}
+
+.active, .active .page-link{
+    background-color: #e9ecef;
+    border-color: #ffc107;
+    color: inherit;
+}

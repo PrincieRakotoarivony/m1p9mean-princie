@@ -9,10 +9,10 @@ import { ToolsService } from './tools.service';
   providedIn: 'root'
 })
 export class AuthService {
-  public static PROFILE_CLIENT: string = "1";
-  public static PROFILE_RESTAURANT: string = "2";
-  public static PROFILE_LIVREUR: string = "3";
-  public static PROFILE_EKALY: string = "4";
+  public static PROFILE_CLIENT: string = "62502e5577bc1a7c7c12c108";
+  public static PROFILE_RESTAURANT: string = "62502e7177bc1a7c7c12c109";
+  public static PROFILE_LIVREUR: string = "62502e8277bc1a7c7c12c10a";
+  public static PROFILE_EKALY: string = "62502e9077bc1a7c7c12c10b";
 
   public static paths_map: any = {
     [AuthService.PROFILE_CLIENT]: "/",
@@ -32,10 +32,10 @@ export class AuthService {
     const token = localStorage.getItem(StorageService.TOKEN_KEY);
     const user = this.storageService.getUser();
     if(token){
-      if(user.id_profile == id_profile_match){
+      if(user.profile == id_profile_match){
         return true;
       } else{
-        this.router.navigateByUrl(AuthService.paths_map[user.id_profile]);
+        this.router.navigateByUrl(AuthService.paths_map[user.profile]);
       }
     } else{
       this.router.navigateByUrl("/login");

@@ -7,7 +7,7 @@ $(document).ready(function (){
     }
 
     function setSidebarOpened(){
-        if(window.screen.width < 600){
+        if(window.screen.width < 1000){
             closeSidebar();
         }
     }

@@ -1,3 +1,19 @@
+<div class="filter-box">
+    <div class="search-box">
+        <input class="search-input form-control" name="search" [(ngModel)]="search" type="text" placeholder="Recherchez des plats ici"/>
+        <button class="search-btn" (click)="refresh()"><i class="fa fa-search fa-lg" aria-hidden="true"></i></button>
+    </div>
+</div>
+
 <div class="grid">
     <app-produit-card *ngFor="let p of produits" [produit]="p" ></app-produit-card>
+</div>
+
+<div class="pagination-box">
+    <app-pagination  
+        [count]="count" 
+        [page]="pageNumber"
+        [nbrPerPage]="nPerPage"
+        [onPageClick]="handlePageClick" >
+    </app-pagination>
 </div>

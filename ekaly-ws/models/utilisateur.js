@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const sha1 = require('sha1');
 const moment = require('moment');
-const { PROFILE_CLIENT } = require("../utils/constantes");
+const { constantes } = require("../utils");
 const Token = require("./token");
 
 const UtilisateurSchema = new mongoose.Schema({
@@ -23,7 +23,7 @@ const UtilisateurSchema = new mongoose.Schema({
 
 
 UtilisateurSchema.methods.signUp = async function (params){
-    this.profile = PROFILE_CLIENT;
+    this.profile = constantes.PROFILE_CLIENT;
     const error = this.validateSync();
     if(error) throw error;
     if(!params.confirmMdp || params.confirmMdp != this.mdp)
@@ -47,7 +47,7 @@ UtilisateurSchema.methods.login = async function (){
     const tokenStr = sha1(u._id + moment());
     token.token = sha1(tokenStr);
     await token.save();
-    return tokenStr;
+    return {user: u, token: tokenStr};
 }
 
 UtilisateurSchema.statics.findUser = async function (token){

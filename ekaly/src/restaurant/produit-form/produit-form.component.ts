@@ -55,7 +55,7 @@ export class ProduitFormComponent implements OnInit {
 
   submit(){
     const success = (path: any) => {
-      this.produit.img = path;
+      if(path) this.produit.img = path;
       this.handleSubmit(this.produit);
     }
 
@@ -63,7 +63,7 @@ export class ProduitFormComponent implements OnInit {
       this.popupService.showError(err.message);
     }
 
-    if(this.produit.visible === undefined) this.produit.visible = false;
+    if(this.produit.visible == undefined) this.produit.visible = false;
     this.convertFile(success, error);
   }
 }
