@@ -24,6 +24,16 @@ router.post('/signUp', async function(req, res){
     }
 });
 
+router.get('/user', async function(req, res){
+    try{
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        res.json(responseBuilder.success(u));
+    } catch(err){
+        res.json(responseBuilder.error(err));
+    }
+});
+
 router.delete('/logout', async function(req, res){
     try{
         const token = tools.extractToken(req.headers.authorization);

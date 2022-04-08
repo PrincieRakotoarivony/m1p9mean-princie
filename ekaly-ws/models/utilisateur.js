@@ -50,6 +50,12 @@ UtilisateurSchema.methods.login = async function (){
     return tokenStr;
 }
 
+UtilisateurSchema.statics.findUser = async function (token){
+    const t = await Token.findToken(token);
+    if(!t) throw new Error("InvalidToken");
+    return t.utilisateur;
+}
+
 const Utilisateur = mongoose.model('Utilisateur', UtilisateurSchema);
 
 
