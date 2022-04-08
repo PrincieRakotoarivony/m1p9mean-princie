@@ -1,6 +1,8 @@
 const { default: mongoose } = require("mongoose");
 const sha1 = require('sha1');
+const moment = require('moment');
 const { PROFILE_CLIENT } = require("../utils/constantes");
+const Token = require("./token");
 
 const UtilisateurSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -30,6 +32,23 @@ UtilisateurSchema.methods.signUp = async function (params){
     this._id = new mongoose.Types.ObjectId();
     await this.save();
 } 
+
+UtilisateurSchema.methods.login = async function (){
+    const u = await Utilisateur.findOne({
+        mail: new RegExp(`^${this.mail}$`, "i"), 
+        mdp: sha1(this.mdp)
+    }).exec();
+    if(!u) throw new Error("Nom d'utilisateur ou mot de passe invalide");
+    const token = new Token({
+        _id: new mongoose.Types.ObjectId(), 
+        utilisateur: u._id, 
+        dateExpiration: moment().add(1, 'h')
+    });
+    const tokenStr = sha1(u._id + moment());
+    token.token = sha1(tokenStr);
+    await token.save();
+    return tokenStr;
+}
 
 const Utilisateur = mongoose.model('Utilisateur', UtilisateurSchema);
 

@@ -5,14 +5,13 @@ const {responseBuilder, tools} = require('../utils');
  const router = express.Router();
 
 router.post('/login', async function(req, res){
-    authService
-    .login(req.body.nomUtilisateur, req.body.mdp)
-    .then((result) => {
-        res.json(responseBuilder.success(result));
-    })
-    .catch((error) => {
-        res.json(responseBuilder.error(error.message));
-    })
+    try{
+        const u = new Utilisateur(req.body);
+        const token = await u.login();
+        res.json(responseBuilder.success(token));
+    } catch(err){
+        res.json(responseBuilder.error(err));
+    }
 });
 
 router.post('/signUp', async function(req, res){
