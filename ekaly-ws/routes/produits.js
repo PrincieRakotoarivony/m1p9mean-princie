@@ -1,50 +1,58 @@
 const express = require('express');
-const { ObjectId } = require('mongodb');
-const {produitsService, authService} = require('../services');
+const { default: mongoose } = require('mongoose');
+const { Produit, Utilisateur } = require('../models');
 const {responseBuilder, tools} = require('../utils');
+const { PROFILE_RESTAURANT } = require('../utils/constantes');
  const router = express.Router();
 
-router.post('/', function(req, res){
-    produitsService
-    .findProduits(req.body)
-    .then((result) => {
+router.post('/', async function(req, res){
+    try{
+        const result = await Produit.search(req.body);
         res.json(responseBuilder.success(result));
-    })
-    .catch((error) => {
-        res.json(responseBuilder.error(error.message));
-    })
+    } catch(error){
+        res.json(responseBuilder.error(error));
+    }
 });
 
 router.post('/save', async function(req, res){
     try{
         const token = tools.extractToken(req.headers.authorization);
-        const tokenUtilisateur = await authService.findTokenUser(token);
-        const result = await produitsService.saveProduit(tokenUtilisateur.utilisateur, req.body);
-        res.json(responseBuilder.success(result));
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_RESTAURANT)) 
+            throw new Error("Pas d'autorisation");
+        const produit = new Produit(req.body);
+        produit._id = new mongoose.Types.ObjectId();
+        produit.restaurant = u.restaurant;
+        await produit.save();
+        res.json(responseBuilder.success(produit._id));
     } catch(error){
-        res.json(responseBuilder.error(error.message));
+        res.json(responseBuilder.error(error));
     }
 });
 
-router.get('/:id_produit', async function(req, res){
+router.get('/:id', async function(req, res){
     try{
-        console.log(req.params.id_produit);
-        const result = await produitsService.findOneProduit({_id: new ObjectId(req.params.id_produit)});
+        const result = await Produit.getById(req.params.id);
         res.json(responseBuilder.success(result));
     } catch(error){
-        res.json(responseBuilder.error(error.message));
+        res.json(responseBuilder.error(error));
     }
 });
 
-router.put('/:id_produit', async function(req, res){
+router.put('/:id', async function(req, res){
     try{
         const token = tools.extractToken(req.headers.authorization);
-        const tokenUtilisateur = await authService.findTokenUser(token);
-        await produitsService.updateProduit(tokenUtilisateur.utilisateur, req.params.id_produit, req.body);
+        const u = await Utilisateur.findUser(token);
+        const produit = await Produit.getById(req.params.id);
+        if(!u.profile.equals(PROFILE_RESTAURANT) || !u.restaurant.equals(produit.restaurant)) 
+            throw new Error("Pas d'autorisation");
+        ["nom", "description", "cout", "prix"].forEach(key => {
+            produit[key] = req.body[key];
+        });
+        await produit.save();
         res.json(responseBuilder.success("Plat modifié"));
     } catch(error){
-        console.error(error);
-        res.json(responseBuilder.error(error.message));
+        res.json(responseBuilder.error(error));
     }
 });
 

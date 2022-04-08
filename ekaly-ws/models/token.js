@@ -17,6 +17,10 @@ TokenSchema.statics.findToken = async function (tokenStr) {
     return token;
 }
 
+TokenSchema.statics.rmvToken = async function (token){
+    await Token.deleteOne({token: sha1(token)});
+}
+
 const Token = mongoose.model('Token', TokenSchema);
 
 

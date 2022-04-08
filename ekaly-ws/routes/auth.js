@@ -1,6 +1,5 @@
 const express = require('express');
-const { Utilisateur } = require('../models');
-const {authService} = require('../services');
+const { Utilisateur, Token } = require('../models');
 const {responseBuilder, tools} = require('../utils');
  const router = express.Router();
 
@@ -37,7 +36,7 @@ router.get('/user', async function(req, res){
 router.delete('/logout', async function(req, res){
     try{
         const token = tools.extractToken(req.headers.authorization);
-        await authService.logout(token);
+        await Token.rmvToken(token);
         res.json(responseBuilder.success("Utilisateur déconnecté"));
     } catch(error){
         res.json(responseBuilder.error(error.message));
