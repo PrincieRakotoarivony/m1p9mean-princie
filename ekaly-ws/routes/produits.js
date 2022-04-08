@@ -46,7 +46,7 @@ router.put('/:id', async function(req, res){
         const produit = await Produit.getById(req.params.id);
         if(!u.profile.equals(PROFILE_RESTAURANT) || !u.restaurant.equals(produit.restaurant)) 
             throw new Error("Pas d'autorisation");
-        ["nom", "description", "cout", "prix"].forEach(key => {
+        ["nom", "description", "cout", "prix", "img"].forEach(key => {
             produit[key] = req.body[key];
         });
         await produit.save();
