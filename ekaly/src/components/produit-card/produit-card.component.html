@@ -18,15 +18,22 @@
 
 <ng-template #modalData let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Angular Bootstrap Modal Popup</h4>
+        <h4 class="modal-title" id="modal-basic-title">Ajouter au panier</h4>
         <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span>
         </button>
     </div>
     <div class="modal-body">
-        
+
+        <div class="qty-input">
+            <label for="product-qty">Quantité</label>
+            <button class="qty-count qty-count--minus" data-action="minus" (click)="qtyMinus()" type="button">-</button>
+            <input class="product-qty" type="number" name="product-qty" id="product-qty" [(ngModel)]="addToCartQty">
+            <button class="qty-count qty-count--add" data-action="add" (click)="qtyPlus()" type="button">+</button>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Valider</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Annuler</button>
     </div>
 </ng-template>

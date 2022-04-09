@@ -1,7 +1,7 @@
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const { Produit, Utilisateur } = require('../models');
-const {responseBuilder, tools} = require('../utils');
+const {responseBuilder, tools, mail} = require('../utils');
 const { constantes } = require('../utils');
  const router = express.Router();
 
@@ -51,6 +51,20 @@ router.put('/:id', async function(req, res){
         });
         await produit.save();
         res.json(responseBuilder.success("Plat modifié"));
+    } catch(error){
+        res.json(responseBuilder.error(error));
+    }
+});
+
+router.get('/mail/send', async function (req, res){
+    try{
+        await mail.sendMail({
+            from: 'ekaly.no-reply@gmail.com',
+            to: 'princierakotoarivony4@gmail.com',
+            subject: 'test send mail',
+            html: '<h1>Welcome</h1><p>That was easy!</p>'
+        });
+        res.json(responseBuilder.success("Mail sent"));
     } catch(error){
         res.json(responseBuilder.error(error));
     }

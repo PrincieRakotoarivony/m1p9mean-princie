@@ -11,6 +11,7 @@ import { StorageService } from 'src/services/storage.service';
 })
 export class ProduitCardComponent implements OnInit {
 
+  addToCartQty: number = 1;
   PROFILE: any = AuthService.PROFILE;
   idProfile: string = "";
   @Input("produit") produit: any = {}
@@ -46,4 +47,14 @@ export class ProduitCardComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+
+  qtyPlus(){
+    this.addToCartQty += 1;
+  }
+
+  qtyMinus(){
+    if(this.addToCartQty == 1) return;
+      this.addToCartQty -= 1;
+  }
+
 }

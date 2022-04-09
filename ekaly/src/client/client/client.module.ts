@@ -6,15 +6,19 @@ import { ClientComponent } from './client.component';
 import { ProduitsListClientComponent } from '../produits-list-client/produits-list-client.component';
 import { ProduitsListComponent } from 'src/components/produits-list/produits-list.component';
 import { MyComponentsModule } from 'src/components/my-components/my-components.module';
+import { PanierComponent } from '../panier/panier.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     ClientComponent,
-    ProduitsListClientComponent
+    ProduitsListClientComponent,
+    PanierComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MyComponentsModule,
     ClientRoutingModule
   ],

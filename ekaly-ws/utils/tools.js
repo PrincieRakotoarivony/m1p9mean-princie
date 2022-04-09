@@ -4,4 +4,5 @@ function extractToken(authorization){
     return token;
 }
 
+
 module.exports = {extractToken};

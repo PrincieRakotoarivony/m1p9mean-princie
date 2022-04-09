@@ -1,0 +1,27 @@
+<p>panier works!</p>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th></th>  
+        <th>Plat</th>
+        <th>P.U</th>
+        <th>Qté</th>
+        <th>Montant</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elmt of panier; let index = index;">
+        <td>{{index}}</td>
+        <td>{{elmt.produit.nom}}</td>
+        <td>{{elmt.produit.prix}}</td>
+        <td>
+            <div class="qty-input">
+                <button class="qty-count qty-count--minus" data-action="minus" (click)="qtyMinus(index)" type="button">-</button>
+                <input class="product-qty" type="number" name="product-qty" id="product-qty" [(ngModel)]="elmt.qte">
+                <button class="qty-count qty-count--add" data-action="add" (click)="qtyPlus(index)" type="button">+</button>
+            </div>
+        </td>
+        <td>{{elmt.montant}}</td>
+      </tr>
+    </tbody>
+</table>
