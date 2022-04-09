@@ -2,8 +2,9 @@
   "name": "ekaly",
   "version": "0.0.0",
   "scripts": {
+    "heroku-postbuild": "ng build --prod",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -12,8 +13,10 @@
   "dependencies": {
     "@angular/animations": "~13.3.0",
     "@angular/cdk": "^13.3.2",
+    "@angular/cli": "~13.3.0",
     "@angular/common": "~13.3.0",
     "@angular/compiler": "~13.3.0",
+    "@angular/compiler-cli": "~13.3.0",
     "@angular/core": "~13.3.0",
     "@angular/forms": "~13.3.0",
     "@angular/localize": "^13.3.1",
@@ -23,15 +26,20 @@
     "@fortawesome/angular-fontawesome": "^0.10.2",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^12.0.2",
+    "@popperjs/core": "^2.11.5",
     "bootstrap": "^5.1.3",
+    "express": "^4.17.3",
     "font-awesome": "^4.7.0",
     "http": "0.0.1-security",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "ng-popups": "^9.0.0",
     "ngx-bootstrap": "^8.0.0",
+    "path": "^0.12.7",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "typescript": "~4.6.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -47,5 +55,6 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.6.2"
-  }
+  },
+  "engines": { "node": "14.17.1", "npm": "6.14.13" }
 }

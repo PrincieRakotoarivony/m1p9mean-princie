@@ -10,6 +10,6 @@ export class AuthGuardLivreurService implements CanActivate{
 
   constructor(private authService: AuthService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return this.authService.canActivateRoute(AuthService.PROFILE_LIVREUR);
+    return this.authService.canActivateRoute(AuthService.PROFILE.LIVREUR);
   }
 }

@@ -10,6 +10,6 @@ export class AuthGuardClientService implements CanActivate{
 
   constructor(private authService: AuthService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return this.authService.canActivateRoute(AuthService.PROFILE_CLIENT);
+    return this.authService.canActivateRoute(AuthService.PROFILE.CLIENT);
   }
 }

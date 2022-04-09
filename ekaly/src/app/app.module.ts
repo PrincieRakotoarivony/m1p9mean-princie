@@ -42,7 +42,7 @@ registerLocaleData(localeFr);
     BrowserModule,
     AppRoutingModule,
     ClientModule,
-    RestaurantModule
+    RestaurantModule 
   ],
   providers: [{provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]

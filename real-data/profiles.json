@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "62502e5577bc1a7c7c12c108"
+  },
+  "nom": "Client"
+},{
+  "_id": {
+    "$oid": "62502e7177bc1a7c7c12c109"
+  },
+  "nom": "Restaurant"
+},{
+  "_id": {
+    "$oid": "62502e8277bc1a7c7c12c10a"
+  },
+  "nom": "Livreur"
+},{
+  "_id": {
+    "$oid": "62502e9077bc1a7c7c12c10b"
+  },
+  "nom": "Ekaly"
+}]

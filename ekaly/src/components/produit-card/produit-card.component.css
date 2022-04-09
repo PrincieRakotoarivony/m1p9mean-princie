@@ -47,3 +47,8 @@
     padding: 20px;
     gap: 10px;
 }
+
+.btn-addToCart{
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+}

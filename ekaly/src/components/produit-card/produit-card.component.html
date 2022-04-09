@@ -6,8 +6,27 @@
         <p>{{produit.description}}</p>
     </div>
     <div class="elmt-footer">
-        <button class="btn-edit btn btn-warning" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
+        <button *ngIf="idProfile == PROFILE.RESTAURANT" class="btn-edit btn btn-warning" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
             <i class="fa fa-wrench" aria-hidden="true"></i>
         </button>
+        <button *ngIf="idProfile == PROFILE.CLIENT"  class="btn-addToCart btn" (click)="triggerModal(modalData)" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i><span>&nbsp;Ajouter au panier</span>
+        </button>
     </div>
+
 </div>
+
+<ng-template #modalData let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Angular Bootstrap Modal Popup</h4>
+        <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>

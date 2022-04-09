@@ -5,6 +5,7 @@ import { ProduitCardComponent } from '../produit-card/produit-card.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -17,12 +18,12 @@ import { PaginationComponent } from '../pagination/pagination.component';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    NgbModule
   ],
   exports: [
     ProduitsListComponent,
     PaginationComponent
-
   ]
 })
 export class MyComponentsModule { }

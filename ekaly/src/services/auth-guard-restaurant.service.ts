@@ -10,6 +10,6 @@ export class AuthGuardRestaurantService implements CanActivate{
 
   constructor(private authService: AuthService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return this.authService.canActivateRoute(AuthService.PROFILE_RESTAURANT);
+    return this.authService.canActivateRoute(AuthService.PROFILE.RESTAURANT);
   }
 }

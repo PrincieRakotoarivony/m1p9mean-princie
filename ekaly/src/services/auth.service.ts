@@ -9,16 +9,20 @@ import { ToolsService } from './tools.service';
   providedIn: 'root'
 })
 export class AuthService {
-  public static PROFILE_CLIENT: string = "62502e5577bc1a7c7c12c108";
-  public static PROFILE_RESTAURANT: string = "62502e7177bc1a7c7c12c109";
-  public static PROFILE_LIVREUR: string = "62502e8277bc1a7c7c12c10a";
-  public static PROFILE_EKALY: string = "62502e9077bc1a7c7c12c10b";
+
+  public static PROFILE : any = {
+    CLIENT: "62502e5577bc1a7c7c12c108",
+    RESTAURANT :  "62502e7177bc1a7c7c12c109",
+    LIVREUR: "62502e8277bc1a7c7c12c10a",
+    EKALY: "62502e9077bc1a7c7c12c10b"
+  };
+  
 
   public static paths_map: any = {
-    [AuthService.PROFILE_CLIENT]: "/",
-    [AuthService.PROFILE_RESTAURANT]: "/restaurant",
-    [AuthService.PROFILE_LIVREUR]: "/livreur",
-    [AuthService.PROFILE_EKALY]: "/ekaly",
+    [AuthService.PROFILE.CLIENT]: "/",
+    [AuthService.PROFILE.RESTAURANT]: "/restaurant",
+    [AuthService.PROFILE.LIVREUR]: "/livreur",
+    [AuthService.PROFILE.EKALY]: "/ekaly",
   };
 
   URL: string = `${BASE_URL}/auth`;

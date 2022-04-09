@@ -18,7 +18,9 @@ app.set('json replacer', function (key, value) {
     return value;
 });
 
-mongoose.connect('mongodb://localhost:27017/ekaly', {useUnifiedTopology: true});
+const url = "mongodb+srv://m1p9mean-912:m1p9mean-912@cluster0.lpbgv.mongodb.net/ekaly?retryWrites=true&w=majority";
+//const url = "mongodb://localhost:27017/ekaly"
+mongoose.connect(url, {useUnifiedTopology: true});
 
 function use_routes(routes){
     Object.keys(routes)

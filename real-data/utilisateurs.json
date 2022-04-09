@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "62503dd86ff9cc7ed88d6fc2"
+  },
+  "mail": "eudoxierakoto4@gmail.com",
+  "nom": "Rakotoarivony",
+  "prenom": "Eudoxie",
+  "mdp": "7c4a8d09ca3762af61e59520943dc26494f8941b",
+  "profile": {
+    "$oid": "62502e5577bc1a7c7c12c108"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6250721477bc1a7c7c12c141"
+  },
+  "nom": "Resto1",
+  "mail": "resto1@gmail.com",
+  "mdp": "7c4a8d09ca3762af61e59520943dc26494f8941b",
+  "profile": {
+    "$oid": "62502e7177bc1a7c7c12c109"
+  },
+  "restaurant": {
+    "$oid": "62506da1d3aa2b86727e56e7"
+  }
+},{
+  "_id": {
+    "$oid": "62512f10226176a65c5255dc"
+  },
+  "mail": "hemmy@gmail.com",
+  "nom": "Ramananjato",
+  "prenom": "Hemmy",
+  "mdp": "7c4a8d09ca3762af61e59520943dc26494f8941b",
+  "profile": {
+    "$oid": "62502e5577bc1a7c7c12c108"
+  },
+  "__v": 0
+}]
