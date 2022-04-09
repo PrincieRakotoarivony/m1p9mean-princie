@@ -1,12 +1,13 @@
 <div class="login-form">
     <div class="form-group">
-        <label for="nomUtilisateur">Adresse email</label>
+        <label for="mail">Adresse email</label>
         <input type="text" class="form-control" id="mail" [(ngModel)]="utilisateur.mail" >
     </div>
     <div class="form-group">
         <label for="mdp">Mot de passe</label>
         <input type="password" class="form-control" id="mdp" [(ngModel)]="utilisateur.mdp">
     </div>
+    <p class="signup-text" >Vous n'avez pas de compte ? <a routerLink="/signup" >s'inscrire ici</a></p>
     <br />
     <button class="btn btn-outline-secondary" (click)="login()">Se connecter</button>
 </div>

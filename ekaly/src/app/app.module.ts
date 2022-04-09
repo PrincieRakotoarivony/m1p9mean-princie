@@ -13,13 +13,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from 'src/login/login.component';
 import { ClientModule } from '../client/client/client.module';
 import { RestaurantModule } from '../restaurant/restaurant/restaurant.module';
+import { SignupComponent } from 'src/signup/signup.component';
 
 registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     FormsModule,

@@ -11,6 +11,7 @@ import { AuthGuardClientService } from 'src/services/auth-guard-client.service';
 import { AuthGuardEkalyService } from 'src/services/auth-guard-ekaly.service';
 import { AuthGuardLivreurService } from 'src/services/auth-guard-livreur.service';
 import { AuthGuardRestaurantService } from 'src/services/auth-guard-restaurant.service';
+import { SignupComponent } from 'src/signup/signup.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   },
   {
     path: 'restaurant',

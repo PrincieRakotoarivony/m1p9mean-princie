@@ -53,4 +53,9 @@ export class AuthService {
     return this.http.delete(url, this.toolsService.getRequestOptions(true));
   }
 
+  signup(utilisateur: any){
+    const url = `${this.URL}/signup`;
+    return this.http.post(url, utilisateur, this.toolsService.getRequestOptions());
+  }
+
 }

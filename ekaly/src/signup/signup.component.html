@@ -1,0 +1,28 @@
+<div class="signup-form">
+    <div class="form-group">
+        <label for="mail">Adresse email</label>
+        <input type="text" class="form-control" id="mail" [(ngModel)]="utilisateur.mail" >
+        <span class="error-msg" *ngIf="errors.mail">{{errors.mail}}</span>
+    </div>
+    <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control" id="nom" [(ngModel)]="utilisateur.nom" >
+        <span class="error-msg" *ngIf="errors.nom">{{errors.nom}}</span>
+    </div>
+    <div class="form-group">
+        <label for="prenom">Prénom</label>
+        <input type="text" class="form-control" id="prenom" [(ngModel)]="utilisateur.prenom" >
+        <span class="error-msg" *ngIf="errors.prenom">{{errors.prenom}}</span>
+    </div>
+    <div class="form-group">
+        <label for="mdp">Mot de passe</label>
+        <input type="password" class="form-control" id="mdp" [(ngModel)]="utilisateur.mdp">
+        <span class="error-msg" *ngIf="errors.mdp">{{errors.mdp}}</span>
+    </div>
+    <div class="form-group">
+        <label for="confirmMdp">Confirmer votre mot de passe</label>
+        <input type="password" class="form-control" id="confirmMdp" [(ngModel)]="utilisateur.confirmMdp">
+    </div>
+    <br />
+    <button class="btn btn-outline-secondary" (click)="signup()">S'inscrire</button>
+</div>
