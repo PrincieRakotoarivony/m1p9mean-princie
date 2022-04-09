@@ -28,4 +28,8 @@ export class PanierComponent implements OnInit {
       qte -= 1;
     this.panier[index].qte = qte;
   }
+
+  removeFromCart(index: number){
+    
+  }
 }

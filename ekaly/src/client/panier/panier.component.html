@@ -1,17 +1,18 @@
 <p>panier works!</p>
-<table class="table table-bordered">
+<table class="table panier-table">
     <thead>
       <tr>
-        <th></th>  
+        <th></th> 
         <th>Plat</th>
         <th>P.U</th>
         <th>Qté</th>
         <th>Montant</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let elmt of panier; let index = index;">
-        <td>{{index}}</td>
+        <td></td>
         <td>{{elmt.produit.nom}}</td>
         <td>{{elmt.produit.prix}}</td>
         <td>
@@ -22,6 +23,39 @@
             </div>
         </td>
         <td>{{elmt.montant}}</td>
+        <td>
+            <button type="button" class="btn rounded-btn btn-danger" (click)="removeFromCart(index)">
+                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+            </button>
+        </td>
       </tr>
+        <tr>
+            <td class="no-border" colspan="3"></td>
+            <td class="text-right">Montant</td> 
+            <td>100000</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="no-border" colspan="3"></td>
+            <td class="text-right">Frais de livraison</td> 
+            <td>12000</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="no-border" colspan="3"></td>
+            <td class="text-right">Total</td> 
+            <td>120000</td>
+            <td></td>
+        </tr>
     </tbody>
 </table>
+
+<div class="btn-box">
+    <button class="btn-achats btn btn-warning" type="button">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i><span>&nbsp;Continuer mes achats</span>
+    </button>
+
+    <button class="btn-commander btn" type="button">
+        <i class="fa fa-cart-plus" aria-hidden="true"></i><span>&nbsp;Commander</span>
+    </button>
+</div>
