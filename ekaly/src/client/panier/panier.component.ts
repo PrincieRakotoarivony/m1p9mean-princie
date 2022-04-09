@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommandeService } from 'src/services/commande/commande.service';
 import { PanierService } from 'src/services/panier/panier.service';
 import { PopupService } from 'src/services/popup.service';
 import { StorageService } from 'src/services/storage.service';
@@ -10,6 +11,11 @@ import { StorageService } from 'src/services/storage.service';
   styleUrls: ['./panier.component.css']
 })
 export class PanierComponent implements OnInit {
+
+  closeReasons: any = {
+    commander: 3,
+    annuler: 4
+  }
 
   adresse: string = "";
   @ViewChild('addressModel', { static: false }) private addressModel : any;
@@ -25,7 +31,8 @@ export class PanierComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private panierService: PanierService,
     private popupService: PopupService,
-    private storageService: StorageService) { }
+    private storageService: StorageService,
+    private commandeService: CommandeService) { }
 
   ngOnInit(): void {
     this.refresh();
@@ -63,6 +70,9 @@ export class PanierComponent implements OnInit {
   triggerModal(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
       console.log(`Closed with: ${res}`);
+      if(res == this.closeReasons.commander){
+        this.commander();
+      }
     }, (res) => {
       console.log(`Dismissed ${this.getDismissReason(res)}`);
     });
@@ -78,7 +88,7 @@ export class PanierComponent implements OnInit {
     }
   }
 
-  test(){
+  openCommanderModal(){
     this.triggerModal(this.addressModel);
   }
 
@@ -127,5 +137,28 @@ export class PanierComponent implements OnInit {
     this.total = total;
     this.fraisPanier = 0;
     if(keys.length > 0) this.fraisPanier = this.frais;
+  }
+
+  commander(){
+    const success = (res: any) => {
+      if(res.meta.status == 1){
+        console.log(res.data);
+        this.storageService.setPanier({});
+      } else{
+        this.popupService.showError(res.meta.message);
+      }
+    };
+
+    const error = (err: any) => {
+      this.popupService.showError(err.message);
+    };
+
+    const params = {
+      adresse: this.adresse
+    };
+
+    this.commandeService.commander(params)
+    .subscribe(success, error);
+
   }
 }

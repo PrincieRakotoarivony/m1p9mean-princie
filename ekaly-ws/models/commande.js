@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const { ETATS_COMMANDE } = require("../utils/constantes");
+const Produit = require("./produit");
 
 const DetailsCommandeSchema = new mongoose.Schema({
     produit: {
@@ -21,6 +22,17 @@ const CommandeSchema = new mongoose.Schema({
     dateCommande: {type: Date, default: Date.now(), required: true }
 });
 
+CommandeSchema.methods.genererCommande = async function (produitsQte){
+    const {panier, frais} = await Produit.getDetailsPanier(produitsQte);
+    const tabIdProduits = Object.keys(panier);
+    this.fraisLivraison = 0;
+    if(tabIdProduits.length > 0) this.fraisLivraison = frais;
+    tabIdProduits.forEach(idProduit => {
+        this.details.push(panier[idProduit]);
+    });
+    this.dateCommande = Date.now();
+    await this.save();
+}
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 
