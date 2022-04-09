@@ -18,4 +18,14 @@ router.post('/save', async function(req, res){
     }
 });
 
+router.post('/', async function(req, res){
+    try{
+        const commandes = await Commande.getCommandes(req.body);
+        res.json(responseBuilder.success(commandes));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
 module.exports = router;

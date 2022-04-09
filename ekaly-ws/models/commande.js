@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const { ETATS_COMMANDE } = require("../utils/constantes");
+const { parseMoment } = require("../utils/tools");
 const Produit = require("./produit");
 
 const DetailsCommandeSchema = new mongoose.Schema({
@@ -33,6 +34,44 @@ CommandeSchema.methods.genererCommande = async function (produitsQte){
     this.dateCommande = Date.now();
     await this.save();
 }
+
+CommandeSchema.statics.getCommandes = async function (params){
+    const crt = params.crt ? params.crt : {};
+    const sort = params.sort;
+    if(crt.dateMin || crt.dateMax) crt["dateCommande"] = {};
+    if(crt.dateMin) crt["dateCommande"]["$gte"] = parseMoment(crt.dateMin);
+    if(crt.dateMax) crt["dateCommande"]["$lte"] = parseMoment(crt.dateMax);
+    delete crt.dateMin;
+    delete crt.dateMax;
+    const commandes = await Commande.aggregate([
+        {
+            "$addFields": {
+                "montant": {
+                    "$reduce": {
+                        "input": "$details",
+                        "initialValue": 0,
+                        "in": { "$add" : ["$$value",  {"$multiply": ["$$this.produit.prix", "$$this.qte"]}] }
+                    }
+                }
+            }
+        },
+        {
+            "$addFields": {
+                "total": { "$add" : ["$montant", "$fraisLivraison"] }
+            }
+        },
+        {
+            "$match": {...crt, "details": {"$elemMatch": { "produit.restaurant": new mongoose.Types.ObjectId("62506e4c8ab7fea143cf6a18")}}}
+        },
+        {
+            "$sort": sort
+        },
+        /*{
+            "$project": {details: 0}
+        }*/
+    ]).exec();
+    return commandes;
+};
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 

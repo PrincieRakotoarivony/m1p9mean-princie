@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "6251e718abb4c3a82a4e69cf"
+  },
+  "client": {
+    "$oid": "62503dd86ff9cc7ed88d6fc2"
+  },
+  "adresse": "Anjomakely, Antananarivo Atsimondrano ",
+  "etat": 1,
+  "dateCommande": {
+    "$date": "2022-04-09T20:05:44.358Z"
+  },
+  "details": [
+    {
+      "produit": {
+        "_id": {
+          "$oid": "625073c50205b336ed6c9d96"
+        },
+        "restaurant": {
+          "$oid": "62506da1d3aa2b86727e56e7"
+        },
+        "nom": "Steak frite salade",
+        "prix": 16000
+      },
+      "qte": 15,
+      "_id": {
+        "$oid": "6251e718abb4c3a82a4e69d1"
+      }
+    },
+	{
+      "produit": {
+        "_id": {
+          "$oid": "625074030205b336ed6c9d9a"
+        },
+        "restaurant": {
+          "$oid": "62506e4c8ab7fea143cf6a18"
+        },
+        "nom": "Ravitoto sy Hena-kisoa ",
+        "prix": 22000
+      },
+      "qte": 20,
+      "_id": {
+        "$oid": "6251fac0cc31ea2651cce0f6"
+      }
+    }
+  ],
+  "fraisLivraison": 5000,
+  "__v": 0
+}]

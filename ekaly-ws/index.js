@@ -11,12 +11,12 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
-app.set('json replacer', function (key, value) {
+/* app.set('json replacer', function (key, value) {
     if (this[key] instanceof Date) {
       value = moment(this[key]).format("YYYY-MM-DD HH:mm:ss");
     }
     return value;
-});
+}); */
 
 //const url = "mongodb+srv://m1p9mean-912:m1p9mean-912@cluster0.lpbgv.mongodb.net/ekaly?retryWrites=true&w=majority";
 const url = "mongodb://localhost:27017/ekaly"
