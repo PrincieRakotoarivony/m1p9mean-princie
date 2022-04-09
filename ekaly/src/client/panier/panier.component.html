@@ -1,4 +1,4 @@
-<p>panier works!</p>
+<p>Mon panier</p>
 <table class="table panier-table">
     <thead>
       <tr>
@@ -11,20 +11,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let elmt of panier; let index = index;">
+      <tr *ngFor="let idProduit of getKeys(panier); let index = index;">
         <td></td>
-        <td>{{elmt.produit.nom}}</td>
-        <td>{{elmt.produit.prix}}</td>
+        <td>{{panier[idProduit].produit.nom}}</td>
+        <td class="text-right">{{panier[idProduit].produit.prix | number: '1.2-2'}}</td>
         <td>
             <div class="qty-input">
-                <button class="qty-count qty-count--minus" data-action="minus" (click)="qtyMinus(index)" type="button">-</button>
-                <input class="product-qty" type="number" name="product-qty" id="product-qty" [(ngModel)]="elmt.qte">
-                <button class="qty-count qty-count--add" data-action="add" (click)="qtyPlus(index)" type="button">+</button>
+                <button class="qty-count qty-count--minus" data-action="minus" (click)="qtyMinus(idProduit)" type="button">-</button>
+                <input class="product-qty" type="number" name="product-qty" id="product-qty" [(ngModel)]="panier[idProduit].qte" (ngModelChange)="qteChanged($event, idProduit)">
+                <button class="qty-count qty-count--add" data-action="add" (click)="qtyPlus(idProduit)" type="button">+</button>
             </div>
         </td>
-        <td>{{elmt.montant}}</td>
+        <td class="text-right">{{panier[idProduit].montant  | number: '1.2-2'}}</td>
         <td>
-            <button type="button" class="btn rounded-btn btn-danger" (click)="removeFromCart(index)">
+            <button type="button" class="btn rounded-btn btn-danger" (click)="removeFromCart(idProduit)">
                 <i class="fa fa-times fa-lg" aria-hidden="true"></i>
             </button>
         </td>
@@ -32,26 +32,26 @@
         <tr>
             <td class="no-border" colspan="3"></td>
             <td class="text-right">Montant</td> 
-            <td>100000</td>
+            <td class="text-right">{{total | number: '1.2-2'}}</td>
             <td></td>
         </tr>
         <tr>
             <td class="no-border" colspan="3"></td>
             <td class="text-right">Frais de livraison</td> 
-            <td>12000</td>
+            <td class="text-right">{{fraisPanier | number: '1.2-2'}}</td>
             <td></td>
         </tr>
         <tr>
             <td class="no-border" colspan="3"></td>
             <td class="text-right">Total</td> 
-            <td>120000</td>
+            <td class="text-right">{{total + fraisPanier | number: '1.2-2'}}</td>
             <td></td>
         </tr>
     </tbody>
 </table>
 
 <div class="btn-box">
-    <button class="btn-achats btn btn-warning" type="button">
+    <button class="btn-achats btn btn-warning" type="button" routerLink="/">
         <i class="fa fa-arrow-left" aria-hidden="true"></i><span>&nbsp;Continuer mes achats</span>
     </button>
 
@@ -59,3 +59,22 @@
         <i class="fa fa-cart-plus" aria-hidden="true"></i><span>&nbsp;Commander</span>
     </button>
 </div>
+
+<ng-template #addressModel let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Informations sur la livraison</h4>
+        <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="adresse">Adresse</label>
+            <input type="text" class="form-control" id="adresse" [(ngModel)]="adresse" >
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Valider</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Annuler</button>
+    </div>
+</ng-template>

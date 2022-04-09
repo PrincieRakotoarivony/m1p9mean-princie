@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { default: mongoose } = require("mongoose");
 
 const ProduitSchema = new mongoose.Schema({
@@ -34,10 +35,27 @@ ProduitSchema.statics.search = async function(params){
     return {result, count};    
 }
 
+/**
+ * 
+ * @param {*} produitsQte {[produit1]: qte1, [produit2]: qte2, ...}
+ */
+ProduitSchema.statics.getDetailsPanier = async function (produitsQte){
+    const panier = {};
+    const tabId = [];
+    Object.keys(produitsQte).forEach(idProduit => {
+        tabId.push(new ObjectId(idProduit));
+    });
+    const produits = await Produit.find({_id: {$in: tabId}, visible: true}).exec();
+    var frais = 5000;
+    produits.forEach((p, index) => {
+        const idProduit = p._id.toString();
+        const dPanier = {produit: p, qte: produitsQte[idProduit]};
+        dPanier.montant = dPanier.qte * p.prix;
+        panier[idProduit] = dPanier;
+    });
+    return {panier, frais};
+}
+
 const Produit = mongoose.model('Produit', ProduitSchema);
-
-
-
-
 
 module.exports = Produit;

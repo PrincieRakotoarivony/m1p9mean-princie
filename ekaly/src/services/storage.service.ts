@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class StorageService {
   public static TOKEN_KEY: string = "token";
   public static USER_KEY: string = "user";
+  public static PANIER_KEY: string = "panier";
 
   constructor() { }
   
@@ -17,5 +18,14 @@ export class StorageService {
   getUser(){
     const user = localStorage.getItem(StorageService.USER_KEY);
     return user ? JSON.parse(user) : {};
+  }
+
+  getPanier(){
+    const panier = localStorage.getItem(StorageService.PANIER_KEY);
+    return panier ? JSON.parse(panier) : {};
+  }
+
+  setPanier(panier: any){
+    localStorage.setItem(StorageService.PANIER_KEY, JSON.stringify(panier));
   }
 }

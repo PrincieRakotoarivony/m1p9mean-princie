@@ -9,7 +9,7 @@
         <button *ngIf="idProfile == PROFILE.RESTAURANT" class="btn-edit btn btn-warning" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
             <i class="fa fa-wrench" aria-hidden="true"></i>
         </button>
-        <button *ngIf="idProfile == PROFILE.CLIENT"  class="btn-addToCart btn" (click)="triggerModal(modalData)" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
+        <button *ngIf="idProfile == PROFILE.CLIENT"  class="btn-addToCart btn" (click)="triggerModal(modalData, produit._id)" type="button" routerLink="/restaurant/produit-update/{{produit._id}}">
             <i class="fa fa-cart-plus" aria-hidden="true"></i><span>&nbsp;Ajouter au panier</span>
         </button>
     </div>
@@ -28,12 +28,12 @@
         <div class="qty-input">
             <label for="product-qty">Quantité</label>
             <button class="qty-count qty-count--minus" data-action="minus" (click)="qtyMinus()" type="button">-</button>
-            <input class="product-qty" type="number" name="product-qty" id="product-qty" [(ngModel)]="addToCartQty">
+            <input class="product-qty" type="number" name="product-qty" id="product-qty" [(ngModel)]="addToCartQty" (ngModelChange)="qteChanged($event)">
             <button class="qty-count qty-count--add" data-action="add" (click)="qtyPlus()" type="button">+</button>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Valider</button>
-        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Annuler</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.close(dismissReasons.addToCart)">Valider</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close(dismissReasons.cancel)">Annuler</button>
     </div>
 </ng-template>

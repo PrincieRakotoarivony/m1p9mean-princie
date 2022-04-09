@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BASE_URL } from 'src/environments/environment';
 import { AuthService } from 'src/services/auth.service';
@@ -11,6 +12,11 @@ import { StorageService } from 'src/services/storage.service';
 })
 export class ProduitCardComponent implements OnInit {
 
+  dismissReasons: any = {
+    addToCart: 3,
+    cancel: 4
+  };
+  addToCartIdProduit: string = ""; 
   addToCartQty: number = 1;
   PROFILE: any = AuthService.PROFILE;
   idProfile: string = "";
@@ -18,7 +24,8 @@ export class ProduitCardComponent implements OnInit {
   closeModal: string = "";
   
   constructor(private storageService: StorageService,
-    private modalService: NgbModal) { 
+    private modalService: NgbModal,
+    private router: Router) { 
     
   }
 
@@ -30,20 +37,25 @@ export class ProduitCardComponent implements OnInit {
     return `${BASE_URL}/imgs/plats/${path}`;
   }
 
-  triggerModal(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+  triggerModal(content: any, idProduit: string) {
+    this.addToCartIdProduit = idProduit;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res: any) => {
       this.closeModal = `Closed with: ${res}`;
+      if(res == this.dismissReasons.addToCart){
+        this.addToCart();
+        this.router.navigateByUrl("/panier");
+      } 
     }, (res) => {
       this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
     });
   }
   
   private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
+    if (reason == ModalDismissReasons.ESC) {
       return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    } else if (reason == ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
-    } else {
+    } else{
       return  `with: ${reason}`;
     }
   }
@@ -55,6 +67,20 @@ export class ProduitCardComponent implements OnInit {
   qtyMinus(){
     if(this.addToCartQty == 1) return;
       this.addToCartQty -= 1;
+  }
+
+  addToCart(){
+    const panier = this.storageService.getPanier();
+    if(panier[this.addToCartIdProduit] != undefined){
+      panier[this.addToCartIdProduit] = panier[this.addToCartIdProduit] + this.addToCartQty;
+    } else{
+      panier[this.addToCartIdProduit] = this.addToCartQty;
+    }
+    this.storageService.setPanier(panier);
+  }
+
+  qteChanged(value: number){
+    if(value <= 0) this.addToCartQty = 1; 
   }
 
 }

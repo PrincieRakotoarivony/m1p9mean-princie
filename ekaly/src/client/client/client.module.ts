@@ -8,6 +8,7 @@ import { ProduitsListComponent } from 'src/components/produits-list/produits-lis
 import { MyComponentsModule } from 'src/components/my-components/my-components.module';
 import { PanierComponent } from '../panier/panier.component';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
+    NgbModule,
     MyComponentsModule,
     ClientRoutingModule
   ],

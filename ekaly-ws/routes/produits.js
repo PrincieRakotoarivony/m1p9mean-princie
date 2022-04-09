@@ -56,6 +56,15 @@ router.put('/:id', async function(req, res){
     }
 });
 
+router.post('/panier', async function(req, res){
+    try{
+        const panier = await Produit.getDetailsPanier(req.body);
+        res.json(responseBuilder.success(panier));
+    } catch(error){
+        res.json(responseBuilder.error(error));
+    }
+});
+
 router.get('/mail/send', async function (req, res){
     try{
         await mail.sendMail({
