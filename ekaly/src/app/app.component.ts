@@ -10,6 +10,7 @@ import { StorageService } from 'src/services/storage.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  loading: boolean = false;
   title = 'ekaly';
   loggedIn: boolean = false;
   menuKey: string = "";
@@ -82,6 +83,15 @@ export class AppComponent implements OnInit{
       this.setMenu();
     });
     this.setMenu();
+  }
+
+  listenLoading(){
+    window.addEventListener('loading:begin',  () => {
+      this.loading = true;
+    });
+    window.addEventListener('loading:stop', () => {
+      this.loading = false;
+    });
   }
   
   setMenu(){

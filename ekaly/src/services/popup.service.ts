@@ -11,4 +11,12 @@ export class PopupService {
   showError(message: string){
     this.ngPopups.alert(message, {title: 'Erreur'});
   }
+
+  beginLoading(){
+    window.dispatchEvent(new CustomEvent('loading:begin'));
+  }
+
+  stopLoading(){
+    window.dispatchEvent(new CustomEvent('loading:stop'));
+  }
 }

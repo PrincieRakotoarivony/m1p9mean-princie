@@ -32,12 +32,15 @@ export class LoginComponent implements OnInit {
       } else{
         this.popupSertice.showError(res.meta.message);
       }
+      this.popupSertice.stopLoading();
     };
 
     const error = (err: any) => {
       this.popupSertice.showError(err.message);
+      this.popupSertice.stopLoading();
     };
 
+    this.popupSertice.beginLoading();
     this.authService.login(this.utilisateur)
     .subscribe(success, error);
   }

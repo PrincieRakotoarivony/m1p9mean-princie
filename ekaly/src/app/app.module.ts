@@ -15,6 +15,7 @@ import { ClientModule } from '../client/client/client.module';
 import { RestaurantModule } from '../restaurant/restaurant/restaurant.module';
 import { SignupComponent } from 'src/signup/signup.component';
 import { EkalyModule } from '../ekaly/ekaly/ekaly.module';
+import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
 
 registerLocaleData(localeFr);
 
@@ -44,7 +45,15 @@ registerLocaleData(localeFr);
     AppRoutingModule,
     ClientModule,
     RestaurantModule,
-    EkalyModule
+    EkalyModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.threeBounce,
+      backdropBackgroundColour: 'rgba(0,0,0,0.65)', 
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff', 
+      secondaryColour: '#ffffff', 
+      tertiaryColour: '#ffffff'
+    })
   ],
   providers: [{provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]

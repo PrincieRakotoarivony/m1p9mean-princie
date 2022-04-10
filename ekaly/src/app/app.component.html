@@ -7,7 +7,7 @@
     <button type="button" class="btn btn-outline-light" (click)="logout()">Se déconnecter</button>
   </div>
   <div class="d-flex align-items-center justify-content-end" *ngIf="!loggedIn">
-    <button type="button" class="btn btn-outline-light">Se connecter</button>
+    <button type="button" class="btn btn-outline-light" routerLink="/login">Se connecter</button>
   </div>
 </header>
 <div class="container-fluid">
@@ -26,3 +26,17 @@
 <footer>
   <p>&copy;&nbsp;Rakotoarivony Andrisoa Nirina Princie</p>
 </footer>
+<div class="my-container">
+  <ng-template #customLoadingTemplate>
+      <div class="custom-class">
+          <h3>
+              Loading...
+          </h3>
+          <button >
+              Click me!
+          </button>
+      </div>
+  </ng-template>
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>

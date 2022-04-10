@@ -32,12 +32,15 @@ export class SignupComponent implements OnInit {
           this.popupService.showError(res.message);
         }
       }
+      this.popupService.stopLoading();
     };
 
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     };
 
+    this.popupService.beginLoading();
     this.authService.signup(this.utilisateur)
     .subscribe(success, error);
 
