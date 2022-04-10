@@ -83,6 +83,7 @@ export class AppComponent implements OnInit{
       this.setMenu();
     });
     this.setMenu();
+    this.listenLoading();
   }
 
   listenLoading(){
