@@ -19,4 +19,14 @@ export class CommandeService {
     const url = `${this.URL}/save`
     return this.http.post(url, params, this.toolsService.getRequestOptions(true));
   }    
+
+  findCommandesClient(params: any){
+    const url = `${this.URL}/client`
+    return this.http.post(url, params, this.toolsService.getRequestOptions(true));
+  }  
+  
+  findCommande(id: string){
+    const url = `${this.URL}/${id}`
+    return this.http.get(url, this.toolsService.getRequestOptions());
+  }  
 }

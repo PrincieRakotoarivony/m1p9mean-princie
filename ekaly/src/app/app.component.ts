@@ -12,6 +12,46 @@ import { StorageService } from 'src/services/storage.service';
 export class AppComponent implements OnInit{
   title = 'ekaly';
   loggedIn: boolean = false;
+  menuKey: string = "";
+  menu: any = {
+    NOTCONNECTED: [
+      {
+        nom: 'RESTAURANTS',
+        lien: '/'
+      },
+      {
+        nom: 'PLATS',
+        lien: '/'
+      }
+    ],
+    [AuthService.PROFILE.CLIENT]: [
+      {
+        nom: 'RESTAURANTS',
+        lien: '/'
+      },
+      {
+        nom: 'PLATS',
+        lien: '/'
+      },
+      {
+        nom: 'MON PANIER',
+        lien: '/panier'
+      },
+      {
+        nom: 'MES COMMANDES',
+        lien: '/commandes'
+      }
+    ],
+    [AuthService.PROFILE.RESTAURANT]: [
+
+    ],
+    [AuthService.PROFILE.LIVREUR]: [
+
+    ],
+    [AuthService.PROFILE.EKALY]: [
+
+    ]
+  }
 
   constructor(private storageService: StorageService,
     private authService: AuthService,
@@ -21,12 +61,22 @@ export class AppComponent implements OnInit{
     this.loggedIn = this.storageService.isLoggedIn();
     window.addEventListener('user:login',  () => {
       this.loggedIn = true;
+      this.setMenu();
     });
     window.addEventListener('user:logout', () => {
       this.loggedIn = false;
+      this.setMenu();
     });
+    this.setMenu();
   }
   
+  setMenu(){
+    if(this.loggedIn){
+      this.menuKey = this.storageService.getUser().profile;
+    } else{
+      this.menuKey = "NOTCONNECTED";
+    }
+  }
   logout(){
     const success = (res: any) => {
       if(res.meta.status == 1){

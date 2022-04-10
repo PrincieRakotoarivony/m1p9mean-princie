@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommandeService } from 'src/services/commande/commande.service';
 import { PanierService } from 'src/services/panier/panier.service';
@@ -32,7 +33,8 @@ export class PanierComponent implements OnInit {
     private panierService: PanierService,
     private popupService: PopupService,
     private storageService: StorageService,
-    private commandeService: CommandeService) { }
+    private commandeService: CommandeService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.refresh();
@@ -142,8 +144,9 @@ export class PanierComponent implements OnInit {
   commander(){
     const success = (res: any) => {
       if(res.meta.status == 1){
-        console.log(res.data);
+        const idCmd = res.data;
         this.storageService.setPanier({});
+        this.router.navigateByUrl("/commande/"+idCmd);
       } else{
         this.popupService.showError(res.meta.message);
       }

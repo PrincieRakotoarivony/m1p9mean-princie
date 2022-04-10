@@ -18,9 +18,15 @@ router.post('/save', async function(req, res){
     }
 });
 
-router.post('/', async function(req, res){
+router.post('/client', async function(req, res){
     try{
-        const commandes = await Commande.getCommandes(req.body);
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        const params = req.body;
+        const crt = params.crt ? params.crt : {}; 
+        crt.client = u._id;
+        params.crt = crt;
+        const commandes = await Commande.getCommandes(params);
         res.json(responseBuilder.success(commandes));
     } catch(error){
         console.log(error);
@@ -28,6 +34,17 @@ router.post('/', async function(req, res){
     }
 });
 
+router.get('/:id', async function(req, res){
+    try{
+        const cmd = await Commande.getCommandeById(req.params.id);
+        res.json(responseBuilder.success(cmd));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
+/*
 router.get('/resto/:id', async function(req, res){
     try{
         const commandes = await Commande.getCommandesResto(req.params.id);
@@ -37,5 +54,5 @@ router.get('/resto/:id', async function(req, res){
         res.json(responseBuilder.error(error));
     }
 });
-
+*/
 module.exports = router;

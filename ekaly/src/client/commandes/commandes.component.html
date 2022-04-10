@@ -1,0 +1,50 @@
+<p>Mes commandes</p>
+<div class="search-box">
+    <label>Date entre</label>
+    <input type="date" class="form-control" id="dateMin" name="dateMin" [(ngModel)]="crt.dateMin" >
+    <label>et</label>
+    <input type="date" class="form-control" id="dateMax" name="dateMax" [(ngModel)]="crt.dateMax">
+    <button class="btn btn-search" (click)="refresh()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+</div>
+<table class="table panier-table">
+    <thead>
+      <tr>
+        <th></th> 
+        <th class="d-flex justify-content-between align-items-ceneter">
+            <span>Date</span>
+            <div>
+                <i class="fa fa-arrow-up sort-btn {{sort.dateCommande == 1? 'active':''}}" (click)="sortClick('dateCommande', 1)" aria-hidden="true"></i>&nbsp;
+                <i class="fa fa-arrow-down sort-btn {{sort.dateCommande == -1? 'active':''}}" (click)="sortClick('dateCommande', -1)" aria-hidden="true"></i>
+            </div>
+            
+        </th>
+        <th>Montant Total</th>
+        <th>Statut</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cmd of commandes; let index = index;">
+        <td></td>
+        <td>{{formatDate(cmd.dateCommande)}}</td>
+        <td class="text-right">{{cmd.total | number: '1.2-2'}}</td>
+        <td>{{cmd.etat}}</td>
+        <td>
+            <button type="button" class="btn btn-search" routerLink="/commande/{{cmd._id}}" >
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+<div class="pagination-box">
+    <app-pagination  
+        [count]="count" 
+        [page]="page"
+        [nbrPerPage]="nPerPage"
+        [onPageClick]="handlePageClick" >
+    </app-pagination>
+</div>
