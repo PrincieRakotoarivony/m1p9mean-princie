@@ -9,10 +9,12 @@ import { ProduitAddComponent } from '../produit-add/produit-add.component';
 import { ProduitFormComponent } from '../produit-form/produit-form.component';
 import { FormsModule } from '@angular/forms';
 import { ProduitUpdateComponent } from '../produit-update/produit-update.component';
+import { CommandesRestoComponent } from '../commandes-resto/commandes-resto.component';
+import { CommandeRestoComponent } from '../commande-resto/commande-resto.component';
 
 
 @NgModule({
-  declarations: [RestaurantComponent, ProduitsListRestaurantComponent, ProduitAddComponent, ProduitFormComponent, ProduitUpdateComponent],
+  declarations: [RestaurantComponent, ProduitsListRestaurantComponent, ProduitAddComponent, ProduitFormComponent, ProduitUpdateComponent, CommandesRestoComponent, CommandeRestoComponent],
   imports: [
     CommonModule,
     FormsModule,

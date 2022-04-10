@@ -4,11 +4,11 @@ import { CommandeService } from 'src/services/commande/commande.service';
 import { PopupService } from 'src/services/popup.service';
 
 @Component({
-  selector: 'app-commandes',
-  templateUrl: './commandes.component.html',
-  styleUrls: ['./commandes.component.css']
+  selector: 'app-commandes-resto',
+  templateUrl: './commandes-resto.component.html',
+  styleUrls: ['./commandes-resto.component.css']
 })
-export class CommandesComponent implements OnInit {
+export class CommandesRestoComponent implements OnInit {
   sort: any = {dateCommande: -1};
   crt: any = {}
   count: number = 0;
@@ -32,7 +32,6 @@ export class CommandesComponent implements OnInit {
       if(res.meta.status == 1){
         this.commandes = res.data.commandes;
         this.count = res.data.count;
-        console.log(res.data);
       } else{
         this.popupService.showError(res.meta.message);
       }
@@ -47,7 +46,7 @@ export class CommandesComponent implements OnInit {
       sort: this.sort
     }
 
-    this.commandesService.findCommandesClient(params)
+    this.commandesService.findCommandesResto(params)
     .subscribe(success, error);
   }
 

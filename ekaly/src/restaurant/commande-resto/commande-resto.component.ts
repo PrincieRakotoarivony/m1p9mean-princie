@@ -5,13 +5,13 @@ import { CommandeService } from 'src/services/commande/commande.service';
 import { PopupService } from 'src/services/popup.service';
 
 @Component({
-  selector: 'app-commande',
-  templateUrl: './commande.component.html',
-  styleUrls: ['./commande.component.css']
+  selector: 'app-commande-resto',
+  templateUrl: './commande-resto.component.html',
+  styleUrls: ['./commande-resto.component.css']
 })
-export class CommandeComponent implements OnInit {
+export class CommandeRestoComponent implements OnInit {
   idCmd: string = "";
-  cmd: any = {details: []};
+  cmd: any = {detailsResto: {details: []}, clientObj: {}};
   constructor(private commandesService: CommandeService,
     private popupService: PopupService,
     private activatedRoute: ActivatedRoute) { }
@@ -37,11 +37,12 @@ export class CommandeComponent implements OnInit {
       this.popupService.showError(err.message);
     }
   
-    this.commandesService.findCommande(this.idCmd)
+    this.commandesService.findCommandeRestoById(this.idCmd)
     .subscribe(success, error);
   }
 
   formatDate(date: string){
     return moment(date).format("DD/MM/YYYY HH:mm");
   }
+
 }

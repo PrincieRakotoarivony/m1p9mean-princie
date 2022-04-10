@@ -31,6 +31,8 @@ export class PaginationComponent implements OnInit, OnChanges  {
   
   initPagination(){
     const pages = [];
+    var next = false;
+    var previous = false;
     const nbrPages = Math.ceil(this.count/this.nbrPerPage);
 
     if(nbrPages > 0){ 
@@ -42,10 +44,12 @@ export class PaginationComponent implements OnInit, OnChanges  {
       }
       pages[currentPos].active = true;
       
-      this.next = this.page < nbrPages;
-      this.previous = this.page > 1;
-      this.pages = pages;
+      next = this.page < nbrPages;
+      previous = this.page > 1;
     }
+    this.pages = pages;
+    this.next = next;
+    this.previous = previous;
   }
 
   clickPage(page: number){

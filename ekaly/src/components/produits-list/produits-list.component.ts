@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AuthService } from 'src/services/auth.service';
 import { PopupService } from 'src/services/popup.service';
 import { ProduitsService } from 'src/services/produits.service';
+import { StorageService } from 'src/services/storage.service';
 
 @Component({
   selector: 'app-produits-list',
@@ -17,7 +19,8 @@ export class ProduitsListComponent implements OnInit, OnChanges {
   
   produits: any[] = [];
   constructor(private produitsService: ProduitsService,
-    private popupService: PopupService) { 
+    private popupService: PopupService,
+    private storageService: StorageService) { 
       this.handlePageClick = this.handlePageClick.bind(this);
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,6 +41,12 @@ export class ProduitsListComponent implements OnInit, OnChanges {
       nbrPerPage: this.nPerPage,
       crt: this.crt
     };
+
+    const user = this.storageService.getUser();
+    if(this.storageService.isLoggedIn() && user.profile == AuthService.PROFILE.RESTAURANT){
+      params.crt.restaurant = user.restaurant;
+    }
+
 
     const success = (res: any) => {
       if(res.meta.status == 1){

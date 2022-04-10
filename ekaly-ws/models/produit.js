@@ -26,6 +26,7 @@ ProduitSchema.statics.search = async function(params){
     const crt = params.crt ? params.crt : {};
     const searchRegex = new RegExp(`${params.search ? params.search: ""}`, "i");
     const where = {$or: [{nom: searchRegex}, {description: searchRegex}], ...crt};
+    console.log(where);
     const count = await Produit.count(where).exec();
     const result = await Produit.find(where)
         .sort(params.sort ? params.sort : {})

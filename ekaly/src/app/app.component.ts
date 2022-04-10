@@ -21,7 +21,8 @@ export class AppComponent implements OnInit{
       },
       {
         nom: 'PLATS',
-        lien: '/'
+        lien: '/',
+        active: true
       }
     ],
     [AuthService.PROFILE.CLIENT]: [
@@ -31,7 +32,8 @@ export class AppComponent implements OnInit{
       },
       {
         nom: 'PLATS',
-        lien: '/'
+        lien: '/',
+        active: true
       },
       {
         nom: 'MON PANIER',
@@ -43,7 +45,15 @@ export class AppComponent implements OnInit{
       }
     ],
     [AuthService.PROFILE.RESTAURANT]: [
-
+      {
+        nom: 'PLATS',
+        lien: '/restaurant',
+        active: true
+      },
+      {
+        nom: 'COMMANDES',
+        lien: '/restaurant/commandes'
+      }
     ],
     [AuthService.PROFILE.LIVREUR]: [
 

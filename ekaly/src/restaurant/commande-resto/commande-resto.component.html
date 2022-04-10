@@ -1,0 +1,43 @@
+<p>Details de la commande</p>
+<table class="table cmd-details">
+    <tbody>
+        <tr>
+            <th class="text-right">Client</th>
+            <td>{{cmd.clientObj.nom}} {{cmd.clientObj.prenom}}</td>
+        </tr>
+        <tr>
+            <th class="text-right">Date</th>
+            <td>{{formatDate(cmd.dateCommande)}}</td>
+        </tr>
+        <tr>
+            <th class="text-right">Statut</th>
+            <td>{{cmd.etatResto}}</td>
+        </tr>
+    </tbody>
+</table>
+<table class="table cmd-details">
+    <thead>
+      <tr>
+        <th></th>  
+        <th>Plat</th>
+        <th>P.U</th>
+        <th>Qté</th>
+        <th>Montant</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cmdDet of cmd.detailsResto.details; let index = index;">
+        <td></td>  
+        <td>{{cmdDet.produit.nom}}</td>
+        <td class="text-right">{{cmdDet.produit.prix | number: '1.2-2'}}</td>
+        <td class="text-right">{{cmdDet.qte | number: '1.0-0'}}</td>
+        <td class="text-right">{{cmdDet.produit.prix * cmdDet.qte | number: '1.2-2'}}</td>
+      </tr>
+        <tr>
+            <td class="no-border" colspan="3"></td>
+            <td class="text-right">Montant total</td> 
+            <td class="text-right">{{cmd.montant | number: '1.2-2'}}</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

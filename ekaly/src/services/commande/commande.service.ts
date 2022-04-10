@@ -25,8 +25,19 @@ export class CommandeService {
     return this.http.post(url, params, this.toolsService.getRequestOptions(true));
   }  
   
+  
   findCommande(id: string){
     const url = `${this.URL}/${id}`
     return this.http.get(url, this.toolsService.getRequestOptions());
   }  
+
+  findCommandesResto(params: any){
+    const url = `${this.URL}/resto`
+    return this.http.post(url, params, this.toolsService.getRequestOptions(true));
+  } 
+  
+  findCommandeRestoById(id: string){
+    const url = `${this.URL}/resto/${id}`
+    return this.http.get(url, this.toolsService.getRequestOptions(true));
+  } 
 }

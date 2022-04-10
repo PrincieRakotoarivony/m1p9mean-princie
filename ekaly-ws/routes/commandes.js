@@ -3,6 +3,7 @@ const { default: mongoose } = require('mongoose');
 const { Commande, Utilisateur } = require('../models');
 const {responseBuilder, tools} = require('../utils');
 const { constantes } = require('../utils');
+const { PROFILE_RESTAURANT } = require('../utils/constantes');
 const router = express.Router();
 
 router.post('/save', async function(req, res){
@@ -44,15 +45,33 @@ router.get('/:id', async function(req, res){
     }
 });
 
-/*
-router.get('/resto/:id', async function(req, res){
+
+router.post('/resto', async function(req, res){
     try{
-        const commandes = await Commande.getCommandesResto(req.params.id);
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_RESTAURANT)) 
+            throw new Error("Pas d'autorisation");
+        const commandes = await Commande.getCommandesResto(u.restaurant, req.body);
         res.json(responseBuilder.success(commandes));
     } catch(error){
         console.log(error);
         res.json(responseBuilder.error(error));
     }
 });
-*/
+
+router.get('/resto/:id', async function(req, res){
+    try{
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_RESTAURANT)) 
+            throw new Error("Pas d'autorisation");
+        const cmd = await Commande.getCommandeRestoById(new mongoose.Types.ObjectId(req.params.id), u.restaurant);
+        res.json(responseBuilder.success(cmd));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
 module.exports = router;
