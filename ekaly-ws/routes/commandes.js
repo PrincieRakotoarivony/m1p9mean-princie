@@ -28,4 +28,14 @@ router.post('/', async function(req, res){
     }
 });
 
+router.get('/resto/:id', async function(req, res){
+    try{
+        const commandes = await Commande.getCommandesResto(req.params.id);
+        res.json(responseBuilder.success(commandes));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
 module.exports = router;

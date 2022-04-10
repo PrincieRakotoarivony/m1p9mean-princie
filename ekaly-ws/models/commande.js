@@ -61,17 +61,32 @@ CommandeSchema.statics.getCommandes = async function (params){
             }
         },
         {
-            "$match": {...crt, "details": {"$elemMatch": { "produit.restaurant": new mongoose.Types.ObjectId("62506e4c8ab7fea143cf6a18")}}}
+            "$match": crt
         },
         {
             "$sort": sort
         },
-        /*{
+        {
             "$project": {details: 0}
-        }*/
+        }
     ]).exec();
     return commandes;
 };
+
+CommandeSchema.statics.getCommandesResto = async function (idRestaurant){
+    console.log('idResto', idRestaurant);
+    const commandes = await Commande.aggregate([
+        { $unwind: "$details" },
+        { $match: {"details.produit.restaurant": new mongoose.Types.ObjectId(idRestaurant) } },
+        { 
+            $group: {
+                _id: {_id: "$_id"},
+                details: {$push: "$details"}
+            } 
+        }
+    ]).exec();
+    return commandes;
+}
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 
