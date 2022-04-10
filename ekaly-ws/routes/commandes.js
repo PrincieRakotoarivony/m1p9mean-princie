@@ -102,4 +102,31 @@ router.get('/ekaly/:id', async function(req, res){
     }
 });
 
+router.post('/resto/:id/etat', async function(req, res){
+    try{
+        const etat = req.query.etat;
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_RESTAURANT))
+            throw new Error("Pas d'autorisation");
+        await Commande.changerEtatResto(new mongoose.Types.ObjectId(req.params.id), u.restaurant, etat);    
+        res.json(responseBuilder.success("success"));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
+router.get('/:id/assigner', async function(req, res){
+    try{
+        const cmd = await Commande.findById(new mongoose.Types.ObjectId(req.params.id)).exec();
+        if(!cmd) throw new Error("Commande invalide");
+        await cmd.assigner(new mongoose.Types.ObjectId(req.query.idLivreur));
+        res.json(responseBuilder.success("success"));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
 module.exports = router;

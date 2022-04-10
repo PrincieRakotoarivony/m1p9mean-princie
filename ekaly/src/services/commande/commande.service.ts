@@ -8,6 +8,7 @@ import { ToolsService } from '../tools.service';
   providedIn: 'root'
 })
 export class CommandeService {
+  public static commandeEtats: any = ["Nouvelle", "En cours de préparation", "Prête à être livrée", "Assignée à un livreur", "En cours de livraison", "Livrée"];
 
   URL: string = `${BASE_URL}/commandes`;
   constructor(private http: HttpClient, 
@@ -50,4 +51,15 @@ export class CommandeService {
     const url = `${this.URL}/ekaly/${id}`
     return this.http.get(url, this.toolsService.getRequestOptions(true));
   } 
+
+  changerEtatCmdResto(idCmd: string, etat: number){
+    const url = `${this.URL}/resto/${idCmd}/etat?etat=${etat}`
+    return this.http.post(url, {}, this.toolsService.getRequestOptions(true));
+  }
+
+  assigner(idCmd: string, idLivreur: string){
+    const url = `${this.URL}/${idCmd}/assigner?idLivreur=${idLivreur}`
+    return this.http.get(url, this.toolsService.getRequestOptions(true));
+  }
+
 }

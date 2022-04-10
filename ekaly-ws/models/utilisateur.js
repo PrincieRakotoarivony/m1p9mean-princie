@@ -3,6 +3,7 @@ const sha1 = require('sha1');
 const moment = require('moment');
 const { constantes } = require("../utils");
 const Token = require("./token");
+const { PROFILE_LIVREUR } = require("../utils/constantes");
 
 const UtilisateurSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -54,6 +55,14 @@ UtilisateurSchema.statics.findUser = async function (token){
     const t = await Token.findToken(token);
     if(!t) throw new Error("InvalidToken");
     return t.utilisateur;
+}
+
+UtilisateurSchema.statics.searchLivreur = async function(search){
+    const searchRegex = new RegExp(`${search ? search: ""}`, "i");
+    const where = {$or: [{nom: searchRegex}, {prenom: searchRegex}], profile: PROFILE_LIVREUR};
+    const result = await Utilisateur.find(where)
+        .exec();
+    return result;    
 }
 
 const Utilisateur = mongoose.model('Utilisateur', UtilisateurSchema);

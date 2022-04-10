@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { CommandeService } from 'src/services/commande/commande.service';
 import { PopupService } from 'src/services/popup.service';
+import { StorageService } from 'src/services/storage.service';
 
 @Component({
   selector: 'app-commande-resto',
@@ -10,6 +11,7 @@ import { PopupService } from 'src/services/popup.service';
   styleUrls: ['./commande-resto.component.css']
 })
 export class CommandeRestoComponent implements OnInit {
+  commandeEtats: any = CommandeService.commandeEtats;
   idCmd: string = "";
   cmd: any = {detailsResto: {details: []}, clientObj: {}};
   constructor(private commandesService: CommandeService,
@@ -45,4 +47,21 @@ export class CommandeRestoComponent implements OnInit {
     return moment(date).format("DD/MM/YYYY HH:mm");
   }
 
+  changeEtat(etat: number){
+    const success = (res: any) => {
+      if(res.meta.status == 1){
+        this.refresh();
+      } else{
+        this.popupService.showError(res.meta.message);
+      }
+    }
+    const error = (err: any) => {
+      this.popupService.showError(err.message);
+    }
+  
+    this.commandesService.changerEtatCmdResto(this.idCmd, etat)
+    .subscribe(success, error);
+  }
+
+  
 }

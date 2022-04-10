@@ -14,3 +14,61 @@
 .text-rowspan{
     vertical-align: center;
 }
+
+.btn-commander, .btn-achats{
+    border: 1px solid #ced4da;
+    border-radius: 23px;
+    color: rgb(112, 112, 112);
+}
+
+.btn-commander{
+    background-color: #e9ecef;
+}
+
+.btn-achats{
+    color: #fff;
+    /* background-color: #E9D8A6; */
+}
+
+.btn-box{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20p;
+    gap: 20px;
+}
+
+.autocomplete-block{
+    position: relative;
+    max-width: 250px;
+}
+
+.autocomplete-block > input{
+    width: 100%;
+}
+
+.autocomplete-down{
+    position: absolute;
+    top: 100%;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    max-height: 450px;
+    overflow-y: scroll;
+}
+
+.autocomplete-item{
+    padding-left: 10px;
+}
+
+.autocomplete-item:hover{
+    cursor: pointer;
+}
+
+.autocomplete-item.active{
+    border-radius: 5px;
+    border: 1px solid #ffc107;
+}

@@ -15,10 +15,19 @@
         </tr>
         <tr>
             <th class="text-right">Statut</th>
-            <td>{{cmd.etat}}</td>
+            <td>{{commandeEtats[cmd.etat]}}</td>
+        </tr>
+        <tr *ngIf="cmd.etat >= 3">
+            <th class="text-right">Livreur</th>
+            <td>{{cmd.livreurObj.nom}} {{cmd.livreurObj.prenom}}</td>
         </tr>
     </tbody>
 </table>
+<div class="btn-box">
+    <button *ngIf="cmd.etat == 2" class="btn-commander btn" (click)="triggerModal(modalData)" type="button">
+        Assigner à un livreur
+    </button>
+  </div>
 <table class="table cmd-details">
     <thead>
       <tr>
@@ -61,3 +70,28 @@
         </tr>
     </tbody>
 </table>
+
+<ng-template #modalData let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Assigner la livraison à un livreur</h4>
+        <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label for="searchLivreur">Rechercher le livreur ici</label>
+            <div class="autocomplete-block">
+                <input type="text" class="form-control" id="searchLivreur" [(ngModel)]="searchLivreur" (keydown.arrowup)="livreurArrowKeyChange($event, -1)" (keydown.arrowdown)="livreurArrowKeyChange($event, 1)" (focus)="focusFunction()" (focusout)="focusOutFunction()" (keydown.enter)="selectLivreur()" (ngModelChange)="focusFunction()">
+                <div *ngIf="showDropdown" class="autocomplete-down" >
+                    <div *ngFor="let l of livreurs; let index = index;" class="autocomplete-item {{index == currentLivreurIndex ? 'active':''}}" click="livreurItemClicked(index)">{{l.nom}} {{l.prenom}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close(dismissReasons.assignerLivreur)">Assigner</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close(dismissReasons.cancel)">Annuler</button>
+    </div>
+</ng-template>

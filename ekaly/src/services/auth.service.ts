@@ -62,4 +62,9 @@ export class AuthService {
     return this.http.post(url, utilisateur, this.toolsService.getRequestOptions());
   }
 
+  getLivreurs(search: string){
+    const url = `${BASE_URL}/livreurs?search=${search}`;
+    return this.http.get(url, this.toolsService.getRequestOptions());
+  }
+
 }

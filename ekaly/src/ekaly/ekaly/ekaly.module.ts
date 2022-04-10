@@ -7,6 +7,7 @@ import { CommandeEkalyComponent } from '../commande-ekaly/commande-ekaly.compone
 import { FormsModule } from '@angular/forms';
 import { MyComponentsModule } from 'src/components/my-components/my-components.module';
 import { CommandeFicheEkalyComponent } from '../commande-fiche-ekaly/commande-fiche-ekaly.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CommandeFicheEkalyComponent } from '../commande-fiche-ekaly/commande-fi
     CommonModule,
     FormsModule,
     EkalyRoutingModule,
-    MyComponentsModule
+    MyComponentsModule,
+    NgbModule
   ],
   exports: [EkalyComponent],
   bootstrap: [EkalyComponent]

@@ -1,8 +1,9 @@
 const { ObjectId } = require("mongodb");
 const { default: mongoose } = require("mongoose");
-const { ETATS_COMMANDE } = require("../utils/constantes");
+const { ETATS_COMMANDE, PROFILE_LIVREUR } = require("../utils/constantes");
 const { parseMoment } = require("../utils/tools");
 const Produit = require("./produit");
+const Utilisateur = require("./utilisateur");
 
 const DetailsCommandeSchema = new mongoose.Schema({
     produit: {
@@ -294,7 +295,7 @@ CommandeSchema.statics.getCommandeEkalyById = async function (idCmd){
         {$unwind: "$detailsResto.details"},
         {
             $group: {
-                _id: {_id: "$_id", client: "$client", dateCommande: "$dateCommande", 
+                _id: {_id: "$_id", client: "$client", livreur: "$livreur", dateCommande: "$dateCommande", 
                 adresse: "$adresse", etat: "$etat", fraisLivraison: "$fraisLivraison", restaurant: "$detailsResto.restaurant", etatResto:"$detailsResto.etat"},
                 montant: {$sum: {$multiply: ["$detailsResto.details.produit.prix", "$detailsResto.details.qte"]}},
                 details: {$push: "$detailsResto.details"}
@@ -314,7 +315,7 @@ CommandeSchema.statics.getCommandeEkalyById = async function (idCmd){
         {$unwind: "$restaurantObj"},
         {
             $group: {
-                _id: {_id: "$_id._id", client: "$_id.client", dateCommande: "$_id.dateCommande", 
+                _id: {_id: "$_id._id", client: "$_id.client", livreur: "$_id.livreur", dateCommande: "$_id.dateCommande", 
                 adresse: "$_id.adresse", etat: "$_id.etat", fraisLivraison: "$_id.fraisLivraison"},
                 montant: {$sum: "$montant"},
                 detailsResto: {$push: {details: "$details", restaurant: "$restaurantObj", etat: "$_id.etatResto", montant: "$montant"}}
@@ -322,7 +323,7 @@ CommandeSchema.statics.getCommandeEkalyById = async function (idCmd){
         },
         { 
             $project: {
-                _id: "$_id._id", client: "$_id.client", dateCommande: "$_id.dateCommande", 
+                _id: "$_id._id", client: "$_id.client", livreur: "$_id.livreur", dateCommande: "$_id.dateCommande", 
                 adresse: "$_id.adresse", etat: "$_id.etat", fraisLivraison: "$_id.fraisLivraison", montant: 1, detailsResto: 1
             } 
         },
@@ -342,12 +343,80 @@ CommandeSchema.statics.getCommandeEkalyById = async function (idCmd){
                 as: "clientObj"
             }
         },
-        {$unwind: "$clientObj"}
+        {$unwind: "$clientObj"},
+        {
+            $lookup: {
+                from: "utilisateurs",
+                localField: "livreur",
+                foreignField: "_id",
+                pipeline: [
+                    {$project: {nom: 1, prenom: 1}}
+                ],
+                as: "livreurObj"
+            }
+        },
+        {$unwind: {path: "$livreurObj", preserveNullAndEmptyArrays: true}}
+        
     ];
     const result = await Commande.aggregate(aggregateParams).exec();
     if(result.length == 0) throw new Error("Commande invalide");
     return result[0];
 };
+
+CommandeSchema.statics.getCommandeEtatAllResto = async function(idCmd){
+    const aggregateParams = [
+        {
+            "$match": {_id: idCmd}
+        },
+        {
+            "$addFields": {
+                "countReady": {
+                    "$reduce": {
+                        "input": "$detailsResto",
+                        "initialValue": 0,
+                        "in": { "$add" : ["$$value",  {"$cond": {if: {$eq: ["$$this.etat", 2]}, then: 1, else: 0}}] }
+                    }
+                },
+                "count": {$size: "$detailsResto"}
+            }
+        },
+        {
+            "$addFields":{
+                "ready": {$eq: ["$countReady", "$count"]}
+            }
+        }
+    ];
+    const result = await Commande.aggregate(aggregateParams).exec();
+    if(result.length == 0) throw new Error("Commande invalide");
+    return result[0];
+}
+
+CommandeSchema.statics.changerEtatResto = async function (idCmd, idRestaurant, etat){
+    await Commande.updateMany(
+        {_id: idCmd},
+        {$set: {"detailsResto.$[elmt].etat": etat}},
+        {arrayFilters: [{"elmt.restaurant": idRestaurant}]}
+    ).exec();
+    const com = await Commande.findById(idCmd).exec();
+    if(!com) throw new Error("Commande invalide");
+    if(com.etat == 0 && etat > 0) com.etat = ETATS_COMMANDE.EN_PREPARATION;    
+    if(etat == 2){
+        const cmd = await Commande.getCommandeEtatAllResto(idCmd);
+        if(cmd.ready){
+            com.etat = ETATS_COMMANDE.PREPAREE;
+        }
+    }
+    com.save();
+
+};
+
+CommandeSchema.methods.assigner = async function (idLivreur) {
+    const livreur = await Utilisateur.findOne({_id: idLivreur, profile: PROFILE_LIVREUR}).exec();
+    if(!livreur) throw new Error("Livreur introuvable");
+    this.livreur = livreur._id;
+    this.etat = ETATS_COMMANDE.ASSIGNEE_LIVREUR;
+    this.save();
+}
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 

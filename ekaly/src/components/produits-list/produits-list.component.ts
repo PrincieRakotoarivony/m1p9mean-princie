@@ -13,7 +13,7 @@ export class ProduitsListComponent implements OnInit, OnChanges {
 
   search: string = "";
   pageNumber: number = 1;
-  @Input("nPerPage") nPerPage: number = 1;
+  @Input("nPerPage") nPerPage: number = 6;
   @Input("crt") crt: any = {};
   count: number = 1; 
   

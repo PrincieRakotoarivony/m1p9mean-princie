@@ -10,3 +10,28 @@
     border: 0;
     border-right: 2px solid;
 }
+
+
+.btn-commander, .btn-achats{
+    border: 1px solid #ced4da;
+    border-radius: 23px;
+    color: rgb(112, 112, 112);
+}
+
+.btn-commander{
+    background-color: #e9ecef;
+}
+
+.btn-achats{
+    color: #fff;
+    /* background-color: #E9D8A6; */
+}
+
+.btn-box{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20p;
+    gap: 20px;
+}
