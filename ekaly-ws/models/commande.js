@@ -233,6 +233,121 @@ CommandeSchema.statics.getCommandeRestoById = async function (idCmd, idRestauran
     return result[0];
 }
 
+CommandeSchema.statics.getCommandesEkaly = async function (params){
+    const crt = params.crt ? params.crt : {};
+    const sort = params.sort;
+    if(crt.dateMin || crt.dateMax) crt["dateCommande"] = {};
+    if(crt.dateMin) crt["dateCommande"]["$gte"] = parseMoment(crt.dateMin);
+    if(crt.dateMax) crt["dateCommande"]["$lte"] = parseMoment(crt.dateMax);
+    delete crt.dateMin;
+    delete crt.dateMax;
+    const aggregateParams = [
+        {
+            "$match": crt
+        },
+        {$unwind: "$detailsResto"},
+        {$unwind: "$detailsResto.details"},
+        {
+            $group: {
+                _id: {_id: "$_id", client: "$client", dateCommande: "$dateCommande", 
+                adresse: "$adresse", etat: "$etat", fraisLivraison: "$fraisLivraison"},
+                montant: {$sum: {$multiply: ["$detailsResto.details.produit.prix", "$detailsResto.details.qte"]}}
+            }
+        },
+        { $project: {_id: "$_id._id", client: "$_id.client", dateCommande: "$_id.dateCommande", 
+            adresse: "$_id.adresse", etat: "$_id.etat", fraisLivraison: "$_id.fraisLivraison", montant: 1 
+        } },
+        {
+            "$addFields": {
+                "total": { "$add" : ["$montant", "$fraisLivraison"] }
+            }
+        },
+        {
+            $lookup: {
+                from: "utilisateurs",
+                localField: "client",
+                foreignField: "_id",
+                pipeline: [
+                    {$project: {nom: 1, prenom: 1}}
+                ],
+                as: "clientObj"
+            }
+        },
+        {$unwind: "$clientObj"},
+    ];
+    const commandes = await Commande.aggregate(aggregateParams)
+    .sort(sort)
+    .skip((params.page - 1) * params.nPerPage)
+    .limit(params.nPerPage)
+    .exec();
+    aggregateParams.push({"$count": "count"});
+    const countResult = await Commande.aggregate(aggregateParams).exec();
+    return {commandes, count: countResult.length > 0 ? countResult[0].count : 0};
+};
+
+CommandeSchema.statics.getCommandeEkalyById = async function (idCmd){
+    const aggregateParams = [
+        {
+            "$match": {_id: idCmd}
+        },
+        {$unwind: "$detailsResto"},
+        {$unwind: "$detailsResto.details"},
+        {
+            $group: {
+                _id: {_id: "$_id", client: "$client", dateCommande: "$dateCommande", 
+                adresse: "$adresse", etat: "$etat", fraisLivraison: "$fraisLivraison", restaurant: "$detailsResto.restaurant", etatResto:"$detailsResto.etat"},
+                montant: {$sum: {$multiply: ["$detailsResto.details.produit.prix", "$detailsResto.details.qte"]}},
+                details: {$push: "$detailsResto.details"}
+            }
+        },
+        {
+            $lookup: {
+                from: "restaurants",
+                localField: "_id.restaurant",
+                foreignField: "_id",
+                pipeline: [
+                    {$project: {nom: 1, adresse: 1}}
+                ],
+                as: "restaurantObj"
+            }
+        },
+        {$unwind: "$restaurantObj"},
+        {
+            $group: {
+                _id: {_id: "$_id._id", client: "$_id.client", dateCommande: "$_id.dateCommande", 
+                adresse: "$_id.adresse", etat: "$_id.etat", fraisLivraison: "$_id.fraisLivraison"},
+                montant: {$sum: "$montant"},
+                detailsResto: {$push: {details: "$details", restaurant: "$restaurantObj", etat: "$_id.etatResto", montant: "$montant"}}
+            }
+        },
+        { 
+            $project: {
+                _id: "$_id._id", client: "$_id.client", dateCommande: "$_id.dateCommande", 
+                adresse: "$_id.adresse", etat: "$_id.etat", fraisLivraison: "$_id.fraisLivraison", montant: 1, detailsResto: 1
+            } 
+        },
+        {
+            $addFields: {
+                total: {$add: ["$montant", "$fraisLivraison"]}
+            }
+        },
+        {
+            $lookup: {
+                from: "utilisateurs",
+                localField: "client",
+                foreignField: "_id",
+                pipeline: [
+                    {$project: {nom: 1, prenom: 1}}
+                ],
+                as: "clientObj"
+            }
+        },
+        {$unwind: "$clientObj"}
+    ];
+    const result = await Commande.aggregate(aggregateParams).exec();
+    if(result.length == 0) throw new Error("Commande invalide");
+    return result[0];
+};
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 

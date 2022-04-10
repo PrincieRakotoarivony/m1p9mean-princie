@@ -40,4 +40,14 @@ export class CommandeService {
     const url = `${this.URL}/resto/${id}`
     return this.http.get(url, this.toolsService.getRequestOptions(true));
   } 
+
+  findCommandesEkaly(params: any){
+    const url = `${this.URL}/ekaly`
+    return this.http.post(url, params, this.toolsService.getRequestOptions(true));
+  }
+
+  findCmdEkalyById(id: string){
+    const url = `${this.URL}/ekaly/${id}`
+    return this.http.get(url, this.toolsService.getRequestOptions(true));
+  } 
 }

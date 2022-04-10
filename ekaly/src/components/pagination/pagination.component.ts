@@ -36,13 +36,16 @@ export class PaginationComponent implements OnInit, OnChanges  {
     const nbrPages = Math.ceil(this.count/this.nbrPerPage);
 
     if(nbrPages > 0){ 
-      const nbr = Math.min(this.show, nbrPages);
-      const middleIndex = Math.floor((nbr-1)/2);
-      const currentPos = Math.max(this.page-1, middleIndex);
-      for(let i=0; i<nbr; i++){
-        pages.push({page: this.page - (currentPos-i), active: false})
+      const before = Math.min(Math.floor((this.show-1)/2), this.page - 1);
+      const after = Math.min(this.show - before, nbrPages - this.page);
+
+      for(let i=0; i<before; i++){
+        pages.push({page: this.page-(before-i), active: false})
       }
-      pages[currentPos].active = true;
+      pages.push({page: this.page, active: true})
+      for(let i=0; i<after; i++){
+        pages.push({page: this.page+(i+1), active: false})
+      }
       
       next = this.page < nbrPages;
       previous = this.page > 1;

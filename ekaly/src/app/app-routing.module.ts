@@ -39,7 +39,7 @@ const routes: Routes = [
   }, 
   {
     path: 'ekaly',
-    component: EkalyComponent,
+    loadChildren: () => import('../ekaly/ekaly/ekaly.module').then(mod => mod.EkalyModule),
     canActivate: [AuthGuardEkalyService]
   }
 ];

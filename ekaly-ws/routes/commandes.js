@@ -3,7 +3,7 @@ const { default: mongoose } = require('mongoose');
 const { Commande, Utilisateur } = require('../models');
 const {responseBuilder, tools} = require('../utils');
 const { constantes } = require('../utils');
-const { PROFILE_RESTAURANT } = require('../utils/constantes');
+const { PROFILE_RESTAURANT, PROFILE_EKALY } = require('../utils/constantes');
 const router = express.Router();
 
 router.post('/save', async function(req, res){
@@ -67,6 +67,34 @@ router.get('/resto/:id', async function(req, res){
         if(!u.profile.equals(PROFILE_RESTAURANT)) 
             throw new Error("Pas d'autorisation");
         const cmd = await Commande.getCommandeRestoById(new mongoose.Types.ObjectId(req.params.id), u.restaurant);
+        res.json(responseBuilder.success(cmd));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
+router.post('/ekaly', async function(req, res){
+    try{
+       /*  const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_EKALY)) 
+            throw new Error("Pas d'autorisation"); */
+        const commandes = await Commande.getCommandesEkaly(req.body);
+        res.json(responseBuilder.success(commandes));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
+router.get('/ekaly/:id', async function(req, res){
+    try{
+       /*  const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_EKALY)) 
+            throw new Error("Pas d'autorisation"); */
+        const cmd = await Commande.getCommandeEkalyById(new mongoose.Types.ObjectId(req.params.id));
         res.json(responseBuilder.success(cmd));
     } catch(error){
         console.log(error);
