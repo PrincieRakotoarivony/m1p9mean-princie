@@ -13,7 +13,7 @@ export class CommandesComponent implements OnInit {
   crt: any = {}
   count: number = 0;
   page: number = 1;
-  nPerPage: number = 1;
+  nPerPage: number = 5;
   commandes: any[] = []
   constructor(private commandesService: CommandeService,
     private popupService: PopupService) {

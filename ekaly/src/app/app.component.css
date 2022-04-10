@@ -60,3 +60,9 @@ header{
         padding-left: 210px;
     }
 }
+
+.menu-item.active{
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    transform: scale(1.02);
+}

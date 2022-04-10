@@ -96,6 +96,15 @@ export class AppComponent implements OnInit{
     .subscribe(success, error);
   }
   
+  clickMenuItem(index: number){
+    const menuTab = this.menu[this.menuKey];
+    for(let i=0; i<menuTab.length; i++){
+      menuTab[i].active = false;
+    }
+    menuTab[index].active = true;
+    this.menu[this.menuKey] = menuTab;
+    this.router.navigateByUrl(menuTab[index].lien);
+  }
   
   
 }

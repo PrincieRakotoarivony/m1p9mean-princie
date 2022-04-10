@@ -16,7 +16,7 @@
       <i class="fa fa-times fa-lg"></i>
     </div>
     <div class="elmts">
-      <div *ngFor="let menuItem of menu[menuKey];" [routerLink]="menuItem.lien">{{menuItem.nom}}</div>
+      <div *ngFor="let menuItem of menu[menuKey]; let index = index;" class="menu-item {{menuItem.active?'active':''}}" (click)="clickMenuItem(index)">{{menuItem.nom}}</div>
     </div>
   </div>
   <div id="content">
