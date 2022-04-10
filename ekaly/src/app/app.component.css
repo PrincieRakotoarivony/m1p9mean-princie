@@ -17,6 +17,7 @@ header{
 .container-fluid{
     margin-top: 96px;
     padding-left: 10px;
+    margin-bottom: 200px;
 }
 
 #sidebar {
@@ -65,4 +66,21 @@ header{
     box-shadow: 0 0 5px 0 rgb(0 0 0 / 25%);
     border-radius: 5px;
     transform: scale(1.02);
+}
+
+footer{
+    background-color: brown;
+    color: #fff;
+    max-height: 100px;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+@media screen and (min-width: 500px){
+    footer{
+        padding-right: 210px;
+    }
 }
