@@ -28,8 +28,8 @@ const CommandeSchema = new mongoose.Schema({
 CommandeSchema.methods.genererCommande = async function (produitsQte){
     const {panier, frais} = await Produit.getDetailsPanier(produitsQte);
     const tabIdProduits = Object.keys(panier);
-    this.fraisLivraison = 0;
-    if(tabIdProduits.length > 0) this.fraisLivraison = frais;
+    if(tabIdProduits.length == 0) throw new Error("Votre panier est vide");
+    this.fraisLivraison = frais;
     tabIdProduits.forEach(idProduit => {
         this.details.push(panier[idProduit]);
     });
