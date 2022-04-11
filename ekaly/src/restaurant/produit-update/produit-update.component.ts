@@ -34,11 +34,15 @@ export class ProduitUpdateComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
 
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
+
+    this.popupService.beginLoading();
     console.log(this.id_produit);
     this.produitsService.getProduit(this.id_produit)
     .subscribe(success, error);
