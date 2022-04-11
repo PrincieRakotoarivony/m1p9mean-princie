@@ -56,11 +56,14 @@ export class CommandeFicheEkalyComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
   
+    this.popupService.beginLoading();
     this.commandesService.findCmdEkalyById(this.idCmd)
     .subscribe(success, error);
   }
@@ -157,11 +160,14 @@ export class CommandeFicheEkalyComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
   
+    this.popupService.beginLoading();
     this.commandesService.assigner(this.idCmd, this.selectedLivreur._id)
     .subscribe(success, error);
   }

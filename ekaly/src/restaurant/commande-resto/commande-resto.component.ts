@@ -34,11 +34,14 @@ export class CommandeRestoComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
   
+    this.popupService.beginLoading();
     this.commandesService.findCommandeRestoById(this.idCmd)
     .subscribe(success, error);
   }
@@ -54,11 +57,14 @@ export class CommandeRestoComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
   
+    this.popupService.beginLoading();
     this.commandesService.changerEtatCmdResto(this.idCmd, etat)
     .subscribe(success, error);
   }

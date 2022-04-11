@@ -30,7 +30,7 @@
         <td></td>
         <td>{{formatDate(cmd.dateCommande)}}</td>
         <td class="text-right">{{cmd.total | number: '1.2-2'}}</td>
-        <td>{{cmd.etat}}</td>
+        <td>{{commandeEtats[cmd.etat]}}</td>
         <td>
             <button type="button" class="btn btn-search" routerLink="/ekaly/commande/{{cmd._id}}" >
                 <i class="fa fa-eye" aria-hidden="true"></i>

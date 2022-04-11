@@ -10,31 +10,18 @@ import { StorageService } from 'src/services/storage.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  menuClosed: boolean = false;
   loading: boolean = false;
   title = 'ekaly';
   loggedIn: boolean = false;
   menuKey: string = "";
+  indexMenuActive: number = 0; 
   menu: any = {
-    NOTCONNECTED: [
-      {
-        nom: 'RESTAURANTS',
-        lien: '/'
-      },
-      {
-        nom: 'PLATS',
-        lien: '/',
-        active: true
-      }
-    ],
+    NOTCONNECTED: null,
     [AuthService.PROFILE.CLIENT]: [
       {
-        nom: 'RESTAURANTS',
-        lien: '/'
-      },
-      {
         nom: 'PLATS',
-        lien: '/',
-        active: true
+        lien: '/'
       },
       {
         nom: 'MON PANIER',
@@ -48,26 +35,27 @@ export class AppComponent implements OnInit{
     [AuthService.PROFILE.RESTAURANT]: [
       {
         nom: 'PLATS',
-        lien: '/restaurant',
-        active: true
+        lien: '/restaurant'
       },
       {
         nom: 'COMMANDES',
         lien: '/restaurant/commandes'
+      },
+      {
+        nom: 'BENEFICES',
+        lien: '/restaurant/benefices'
       }
     ],
     [AuthService.PROFILE.LIVREUR]: [
       {
         nom: 'COMMANDES',
-        lien: '/',
-        active: true
+        lien: '/'
       },
     ],
     [AuthService.PROFILE.EKALY]: [
       {
         nom: 'COMMANDES',
-        lien: '/ekaly',
-        active: true
+        lien: '/ekaly'
       }
     ]
   }
@@ -86,8 +74,10 @@ export class AppComponent implements OnInit{
       this.loggedIn = false;
       this.setMenu();
     });
+    window.addEventListener('resize', () => {this.setMenuClosedOnWindowResizing();})
     this.setMenu();
     this.listenLoading();
+    this.setMenuClosedOnWindowResizing();
   }
 
   listenLoading(){
@@ -105,6 +95,7 @@ export class AppComponent implements OnInit{
     } else{
       this.menuKey = "NOTCONNECTED";
     }
+    this.indexMenuActive = 0;
   }
   logout(){
     const success = (res: any) => {
@@ -117,24 +108,33 @@ export class AppComponent implements OnInit{
       } else {
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     };
 
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     };
+
+    this.popupService.beginLoading();
     this.authService.logout()
     .subscribe(success, error);
   }
   
   clickMenuItem(index: number){
     const menuTab = this.menu[this.menuKey];
-    for(let i=0; i<menuTab.length; i++){
-      menuTab[i].active = false;
-    }
-    menuTab[index].active = true;
-    this.menu[this.menuKey] = menuTab;
+    this.indexMenuActive = index;
     this.router.navigateByUrl(menuTab[index].lien);
   }
   
+  closeMenu(){
+    this.menuClosed = true;
+  }
+  toogleMenu(){
+    this.menuClosed = !this.menuClosed;
+  }
   
+  setMenuClosedOnWindowResizing(){
+    this.menuClosed = window.innerWidth < 1000;
+  }
 }

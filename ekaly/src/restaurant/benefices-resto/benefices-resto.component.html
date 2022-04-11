@@ -1,0 +1,75 @@
+<p>Bénéfices</p>
+<div class="search-box">
+    <label>Date entre</label>
+    <input type="date" class="form-control" id="dateMin" name="dateMin" [(ngModel)]="crt.dateMin" >
+    <label>et</label>
+    <input type="date" class="form-control" id="dateMax" name="dateMax" [(ngModel)]="crt.dateMax">
+    <label>Bénéfices par </label>
+    <select class="form-control" name="level" [(ngModel)]="level">
+        <option *ngFor="let l of levels; let index = index;" value="{{index+1}}">{{l}}</option>
+    </select>
+    <button class="btn btn-search" (click)="refresh()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+</div>
+<table class="table panier-table">
+    <thead>
+      <tr>
+        <th></th> 
+        <th>
+            <span>{{levelStr}}</span>
+            <div style="float: right;">
+                <i class="fa fa-arrow-up sort-btn {{sort._id == 1? 'active':''}}" (click)="sortClick('_id', 1)" aria-hidden="true"></i>&nbsp;
+                <i class="fa fa-arrow-down sort-btn {{sort._id == -1? 'active':''}}" (click)="sortClick('_id', -1)" aria-hidden="true"></i>
+            </div>
+            
+        </th>
+        <th >
+            <span>Entrée</span>
+            <div style="float: right;">
+                <i class="fa fa-arrow-up sort-btn {{sort.entree == 1? 'active':''}}" (click)="sortClick('entree', 1)" aria-hidden="true"></i>&nbsp;
+                <i class="fa fa-arrow-down sort-btn {{sort.entree == -1? 'active':''}}" (click)="sortClick('entree', -1)" aria-hidden="true"></i>
+            </div>
+        </th>
+        <th >
+            <span>Sortie</span>
+            <div style="float: right;">
+                <i class="fa fa-arrow-up sort-btn {{sort.sortie == 1? 'active':''}}" (click)="sortClick('sortie', 1)" aria-hidden="true"></i>&nbsp;
+                <i class="fa fa-arrow-down sort-btn {{sort.sortie == -1? 'active':''}}" (click)="sortClick('sortie', -1)" aria-hidden="true"></i>
+            </div>
+        </th>
+        <th >
+            <span>Bénéfice</span>
+            <div style="float: right;">
+                <i class="fa fa-arrow-up sort-btn {{sort.benefice == 1? 'active':''}}" (click)="sortClick('benefice', 1)" aria-hidden="true"></i>&nbsp;
+                <i class="fa fa-arrow-down sort-btn {{sort.benefice == -1? 'active':''}}" (click)="sortClick('benefice', -1)" aria-hidden="true"></i>
+            </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ben of benefices; let index = index;">
+        <td></td>
+        <td>{{formatDateLevel(ben._id)}}</td>
+        <td class="text-right">{{ben.entree | number: '1.2-2'}}</td>
+        <td class="text-right">{{ben.sortie | number: '1.2-2'}}</td>
+        <td class="text-right">{{ben.benefice | number: '1.2-2'}}</td>
+      </tr>
+      <tr>
+          <td ></td>
+          <td></td>
+          <td></td>
+          <th class="text-right">Bénéfice Total</th>
+          <td class="text-right">{{total.totalBenefice | number : '1.2-2'}}</td>
+      </tr>
+    </tbody>
+</table>
+
+<div class="pagination-box">
+    <app-pagination  
+        [count]="count" 
+        [page]="page"
+        [nbrPerPage]="nPerPage"
+        [onPageClick]="handlePageClick" >
+    </app-pagination>
+</div>

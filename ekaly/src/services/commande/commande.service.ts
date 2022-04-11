@@ -9,6 +9,9 @@ import { ToolsService } from '../tools.service';
 })
 export class CommandeService {
   public static commandeEtats: any = ["Nouvelle", "En cours de préparation", "Prête à être livrée", "Assignée à un livreur", "En cours de livraison", "Livrée"];
+  public static getCommandeEtatClient(etat: number){
+    return etat < 5 ? "En cours" : "Livrée";
+  }
 
   URL: string = `${BASE_URL}/commandes`;
   constructor(private http: HttpClient, 
@@ -71,4 +74,9 @@ export class CommandeService {
     const url = `${this.URL}/${idCmd}/etat-livraison?etat=${etat}`;
     return this.http.post(url, {}, this.toolsService.getRequestOptions(true));
   }
+
+  findBeneficesResto(params: any){
+    const url = `${this.URL}/restaurant/benefice`
+    return this.http.post(url, params, this.toolsService.getRequestOptions(true));
+  } 
 }

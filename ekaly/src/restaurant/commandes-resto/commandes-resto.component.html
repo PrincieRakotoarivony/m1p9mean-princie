@@ -30,7 +30,7 @@
         <td></td>
         <td>{{formatDate(cmd.dateCommande)}}</td>
         <td class="text-right">{{cmd.montant | number: '1.2-2'}}</td>
-        <td>{{cmd.etatResto}}</td>
+        <td>{{commandeEtats[cmd.etatResto]}}</td>
         <td>
             <button type="button" class="btn btn-search" routerLink="/restaurant/commande/{{cmd._id}}" >
                 <i class="fa fa-eye" aria-hidden="true"></i>

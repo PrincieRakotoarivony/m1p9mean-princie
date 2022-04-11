@@ -11,10 +11,11 @@ import { FormsModule } from '@angular/forms';
 import { ProduitUpdateComponent } from '../produit-update/produit-update.component';
 import { CommandesRestoComponent } from '../commandes-resto/commandes-resto.component';
 import { CommandeRestoComponent } from '../commande-resto/commande-resto.component';
+import { BeneficesRestoComponent } from '../benefices-resto/benefices-resto.component';
 
 
 @NgModule({
-  declarations: [RestaurantComponent, ProduitsListRestaurantComponent, ProduitAddComponent, ProduitFormComponent, ProduitUpdateComponent, CommandesRestoComponent, CommandeRestoComponent],
+  declarations: [RestaurantComponent, ProduitsListRestaurantComponent, ProduitAddComponent, ProduitFormComponent, ProduitUpdateComponent, CommandesRestoComponent, CommandeRestoComponent, BeneficesRestoComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -9,6 +9,7 @@ import { PopupService } from 'src/services/popup.service';
   styleUrls: ['./commandes-resto.component.css']
 })
 export class CommandesRestoComponent implements OnInit {
+  commandeEtats: any = CommandeService.commandeEtats;
   sort: any = {dateCommande: -1};
   crt: any = {}
   count: number = 0;
@@ -35,9 +36,11 @@ export class CommandesRestoComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
     const params = {
       crt: this.formatCrt(),
@@ -46,6 +49,7 @@ export class CommandesRestoComponent implements OnInit {
       sort: this.sort
     }
 
+    this.popupService.beginLoading();
     this.commandesService.findCommandesResto(params)
     .subscribe(success, error);
   }
@@ -75,4 +79,6 @@ export class CommandesRestoComponent implements OnInit {
     this.sort[field] = value;
     this.refresh();
   }
+
+  
 }

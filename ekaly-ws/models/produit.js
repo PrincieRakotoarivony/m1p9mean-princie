@@ -29,6 +29,7 @@ ProduitSchema.statics.search = async function(params){
     console.log(where);
     const count = await Produit.count(where).exec();
     const result = await Produit.find(where)
+        .populate('restaurant')
         .sort(params.sort ? params.sort : {})
         .limit(params.nbrPerPage)
         .skip((params.page - 1) * params.nbrPerPage)

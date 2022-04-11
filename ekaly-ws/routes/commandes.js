@@ -167,4 +167,18 @@ router.post('/:id/etat-livraison', async function(req, res){
     }
 });
 
+router.post('/restaurant/benefice', async function(req, res){
+    try{
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_RESTAURANT)) 
+            throw new Error("Pas d'autorisation");
+        const result = await Commande.getBeneficesResto(new mongoose.Types.ObjectId(u.restaurant), req.body);
+        res.json(responseBuilder.success(result));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
 module.exports = router;

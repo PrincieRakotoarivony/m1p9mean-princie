@@ -1,5 +1,5 @@
 
-$(document).ready(function (){
+/* $(document).ready(function (){
     var sidebarOpened = true;
     function closeSidebar(){
         document.getElementById('sidebar').style.left = "-200px";
@@ -23,7 +23,7 @@ $(document).ready(function (){
     });
     
     setSidebarOpened();
-});
+}); */
 
 
 

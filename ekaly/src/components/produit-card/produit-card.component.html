@@ -3,6 +3,7 @@
     <div class="elmt-content">
         <h1>{{produit.nom}}</h1>
         <h2>{{produit.prix | number:'1.2-2'}} Ar</h2>
+        <h3 *ngIf="idProfile == PROFILE.CLIENT"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;{{produit.restaurant.nom}}</h3>
         <p>{{produit.description}}</p>
     </div>
     <div class="elmt-footer">

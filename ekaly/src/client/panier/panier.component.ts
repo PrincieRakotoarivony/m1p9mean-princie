@@ -104,12 +104,15 @@ export class PanierComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     };
 
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     };
 
+    this.popupService.beginLoading();
     this.panierService.getDetailsPanier()
     .subscribe(success, error);
   }
@@ -147,16 +150,19 @@ export class PanierComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     };
 
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     };
 
     const params = {
       adresse: this.adresse
     };
 
+    this.popupService.beginLoading();
     this.commandeService.commander(params)
     .subscribe(success, error);
 

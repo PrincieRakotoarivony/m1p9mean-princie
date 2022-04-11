@@ -9,7 +9,8 @@ const DetailsCommandeSchema = new mongoose.Schema({
     produit: {
         _id: {type: mongoose.Schema.Types.ObjectId, required: true},
         nom: String,
-        prix: Number
+        prix: Number,
+        cout: Number
     },
     qte: {type: Number, required: [true, 'Quantité obligatoire'], min: [1, 'La quantité doit être positive']}
 });
@@ -455,7 +456,69 @@ CommandeSchema.statics.getCommandesLivreur = async function (crt){
     return commandes;
 };
 
-
+CommandeSchema.statics.getBeneficesResto = async function (idRestaurant, params){
+    const crt = params.crt ? params.crt : {};
+    if(crt.dateMin || crt.dateMax) crt["dateCommande"] = {};
+    if(crt.dateMin) crt["dateCommande"]["$gte"] = parseMoment(crt.dateMin);
+    if(crt.dateMax) crt["dateCommande"]["$lte"] = parseMoment(crt.dateMax);
+    delete crt.dateMin;
+    delete crt.dateMax;
+    const concat = [{$toString: { $year: "$dateCommande" }}];
+    if(params.level >= 2){ 
+        concat.push("-");
+        concat.push({$cond: {if: {$eq: [{$strLenCP: {$toString: {$month: "$dateCommande"}}}, 2]}, then: {$toString: {$month: "$dateCommande"}}, else: {$concat: ["0", {$toString: {$month: "$dateCommande"}}]}} });
+    }
+    if(params.level == 3){
+        concat.push("-");
+        concat.push({$cond: {if: {$eq: [{$strLenCP: {$toString: {$dayOfMonth: "$dateCommande"}}}, 2]}, then: {$toString: {$dayOfMonth: "$dateCommande"}}, else: {$concat: ["0", {$toString: {$dayOfMonth: "$dateCommande"}}]}} });
+    } 
+    const groupId = {$concat: concat}; 
+    const aggregateParams = [
+        { $match: crt },
+        {$unwind: "$detailsResto"},
+        { $match: {"detailsResto.restaurant": idRestaurant} },
+        { $unwind: "$detailsResto.details" },
+        {
+            $group: {
+                _id: groupId,
+                entree: {$sum: {$multiply: ["$detailsResto.details.produit.prix", "$detailsResto.details.qte"]}},
+                sortie: {$sum: {$multiply: ["$detailsResto.details.produit.cout", "$detailsResto.details.qte"]}}
+            }
+        },
+        {
+            $addFields: {benefice: {$subtract: ["$entree", "$sortie"]}}
+        }
+    ];
+    const commandes = await Commande.aggregate(aggregateParams)
+    .sort(params.sort)
+    .skip((params.page - 1) * params.nPerPage)
+    .limit(params.nPerPage)
+    .exec();
+    aggregateParams.push({$count: "count"});
+    const countResult = await Commande.aggregate(aggregateParams).exec();
+    aggregateParams.pop();
+    aggregateParams.push({
+        $group: { 
+            _id: null, 
+            totalEntree: { $sum: "$entree" }, 
+            totalSortie: {$sum: "$sortie"}, 
+            totalBenefice: {$sum: "$benefice"} 
+        }   
+    });
+    const totalResult = await Commande.aggregate(aggregateParams).exec();
+    const result = {
+        commandes, 
+        count: countResult.length > 0 ? countResult[0].count : 0
+    };
+    if(totalResult.length > 0){
+        result.total = {
+            totalEntree: totalResult[0].totalEntree,
+            totalSortie: totalResult[0].totalSortie,
+            totalBenefice: totalResult[0].totalBenefice
+        };
+    }
+    return result;
+};
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 

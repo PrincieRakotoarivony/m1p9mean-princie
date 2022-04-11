@@ -32,16 +32,24 @@ export class CommandeComponent implements OnInit {
       } else{
         this.popupService.showError(res.meta.message);
       }
+      this.popupService.stopLoading();
     }
     const error = (err: any) => {
       this.popupService.showError(err.message);
+      this.popupService.stopLoading();
     }
   
+    this.popupService.beginLoading();
     this.commandesService.findCommande(this.idCmd)
     .subscribe(success, error);
   }
 
   formatDate(date: string){
     return moment(date).format("DD/MM/YYYY HH:mm");
+  }
+
+  getCommandeEtat(etat: number){
+    return CommandeService.getCommandeEtatClient(etat);
+
   }
 }
