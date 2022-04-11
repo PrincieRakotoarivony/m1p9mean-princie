@@ -21,10 +21,7 @@ export class PanierComponent implements OnInit {
   adresse: string = "";
   @ViewChild('addressModel', { static: false }) private addressModel : any;
 
-  panier: any = {
-    "1": {qte: 2, montant: 2000, produit: {_id: "1", nom: "Ravitoto", prix: 12300}},
-    "2": {qte: 3, montant: 1500, produit: {_id: "2", nom: "Steak", prix: 25000}}
-  };
+  panier: any = {};
   total: number = 0;
   frais: number = 0;
   fraisPanier: number = 0;
