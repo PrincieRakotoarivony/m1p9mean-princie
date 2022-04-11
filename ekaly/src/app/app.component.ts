@@ -112,6 +112,7 @@ export class AppComponent implements OnInit{
         window.dispatchEvent(new CustomEvent('user:logout'));
         localStorage.removeItem(StorageService.TOKEN_KEY);
         localStorage.removeItem(StorageService.USER_KEY);
+        localStorage.removeItem(StorageService.PANIER_KEY);
         this.router.navigateByUrl("/login");
       } else {
         this.popupService.showError(res.meta.message);
