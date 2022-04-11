@@ -48,7 +48,7 @@
         <td class="text-right">{{cmdDet.qte | number: '1.0-0'}}</td>
         <td class="text-right">{{cmdDet.produit.prix * cmdDet.qte | number: '1.2-2'}}</td>
         <td class="text-right" *ngIf="cmdDet.resto" [attr.rowspan]="cmdDet.resto.nbrElmt">{{cmdDet.resto.montant | number: '1.2-2'}}</td>  
-        <td *ngIf="cmdDet.resto" [attr.rowspan]="cmdDet.resto.nbrElmt">{{cmdDet.resto.etat}}</td>
+        <td *ngIf="cmdDet.resto" [attr.rowspan]="cmdDet.resto.nbrElmt">{{commandeEtats[cmdDet.resto.etat]}}</td>
       </tr>
         <tr>
             <td class="no-border" colspan="4"></td>
