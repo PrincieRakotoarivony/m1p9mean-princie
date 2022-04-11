@@ -67,4 +67,14 @@ export class AuthService {
     return this.http.get(url, this.toolsService.getRequestOptions());
   }
 
+  mdpOublie(mail: string){
+    const url = `${this.URL}/mdpOublie?mail=${mail}`;
+    return this.http.get(url, this.toolsService.getRequestOptions());
+  }
+
+  reinitMdp(params: any){
+    const url = `${this.URL}/reinitMdp`;
+    return this.http.post(url, params, this.toolsService.getRequestOptions());
+  }
+
 }

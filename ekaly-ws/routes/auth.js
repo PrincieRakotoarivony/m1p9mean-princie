@@ -43,4 +43,24 @@ router.delete('/logout', async function(req, res){
     }
 });
 
+router.get('/mdpOublie', async function(req, res){
+    try{
+        await Utilisateur.mdpOublie(req.query.mail);
+        res.json(responseBuilder.success("success"));
+    } catch(err){
+        console.log(err);
+        res.json(responseBuilder.error(err));
+    }
+});
+
+router.post('/reinitMdp', async function(req, res){
+    try{
+        await Utilisateur.reinitMdp(req.body);
+        res.json(responseBuilder.success("success"));
+    } catch(err){
+        console.log(err);
+        res.json(responseBuilder.error(err));
+    }
+});
+
 module.exports = router;

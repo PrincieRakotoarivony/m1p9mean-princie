@@ -1,10 +1,11 @@
 const { default: mongoose } = require("mongoose");
 
-const ProfileSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    nom: String
+const MdpOublieSchema = new mongoose.Schema({
+    utilisateur: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Utilisateur'},
+    verifCode: {type: String, required: true},
+    dateExpiration: Date
 });
 
-const Profile = mongoose.model('Profile', ProfileSchema);
+const MdpOublie = mongoose.model('MdpOublie', MdpOublieSchema);
 
-module.exports = Profile;
+module.exports = MdpOublie;

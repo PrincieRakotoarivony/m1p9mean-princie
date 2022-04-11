@@ -6,6 +6,7 @@ import { ProduitsListComponent } from 'src/components/produits-list/produits-lis
 import { EkalyComponent } from 'src/ekaly/ekaly/ekaly.component';
 import { LivreurComponent } from 'src/livreur/livreur/livreur.component';
 import { LoginComponent } from 'src/login/login.component';
+import { MdpOublieComponent } from 'src/mdp-oublie/mdp-oublie.component';
 import { RestaurantComponent } from 'src/restaurant/restaurant/restaurant.component';
 import { AuthGuardClientService } from 'src/services/auth-guard-client.service';
 import { AuthGuardEkalyService } from 'src/services/auth-guard-ekaly.service';
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'mdp-oublie',
+    component: MdpOublieComponent
   },
   {
     path: 'signup',

@@ -18,8 +18,8 @@ app.use(express.static('public'))
     return value;
 }); */
 
-const url = "mongodb+srv://m1p9mean-912:m1p9mean-912@cluster0.lpbgv.mongodb.net/ekaly?retryWrites=true&w=majority";
-//const url = "mongodb://localhost:27017/ekaly"
+//const url = "mongodb+srv://m1p9mean-912:m1p9mean-912@cluster0.lpbgv.mongodb.net/ekaly?retryWrites=true&w=majority";
+const url = "mongodb://localhost:27017/ekaly"
 mongoose.connect(url, {useUnifiedTopology: true});
 
 function use_routes(routes){

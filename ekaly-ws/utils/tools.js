@@ -11,4 +11,15 @@ function parseMoment(dateStr){
     return m;
 }
 
-module.exports = {extractToken, parseMoment};
+function generateRandomDigit(){
+    return Math.floor(Math.random()*10);
+}
+
+function generateRandomCode(n){
+    var code = "";
+    for(let i=0; i<n; i++){
+        code += generateRandomDigit();
+    }
+    return code;
+}
+module.exports = {extractToken, parseMoment, generateRandomCode};

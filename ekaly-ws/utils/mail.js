@@ -10,6 +10,7 @@ var transporter = nodemailer.createTransport({
 
 
 function sendMail(mail){
+    mail.from = 'ekaly.no-reply@gmail.com';
     return transporter.sendMail(mail);
 }
 

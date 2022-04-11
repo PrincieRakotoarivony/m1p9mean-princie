@@ -16,6 +16,7 @@ import { RestaurantModule } from '../restaurant/restaurant/restaurant.module';
 import { SignupComponent } from 'src/signup/signup.component';
 import { EkalyModule } from '../ekaly/ekaly/ekaly.module';
 import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
+import { MdpOublieComponent } from 'src/mdp-oublie/mdp-oublie.component';
 
 registerLocaleData(localeFr);
 
@@ -23,7 +24,8 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    MdpOublieComponent
   ],
   imports: [
     FormsModule,
