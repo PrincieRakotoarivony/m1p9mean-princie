@@ -1,0 +1,40 @@
+.dd-box{
+    min-height: 400px;
+    max-height: 500px;
+    overflow-y: scroll;
+    min-width: 300px;
+}
+
+
+.dd-container{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.dd{
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.loader {
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+ 
+ h3{
+     font-size: 1.2rem;
+     text-align: center;
+ }
+ 
+ .dd-box{
+     font-size: .9rem;
+     font-weight: 400;
+ }

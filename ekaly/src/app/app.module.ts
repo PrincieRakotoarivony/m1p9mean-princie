@@ -17,6 +17,7 @@ import { SignupComponent } from 'src/signup/signup.component';
 import { EkalyModule } from '../ekaly/ekaly/ekaly.module';
 import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
 import { MdpOublieComponent } from 'src/mdp-oublie/mdp-oublie.component';
+import { LivreurModule } from '../livreur/livreur/livreur.module';
 
 registerLocaleData(localeFr);
 
@@ -55,7 +56,8 @@ registerLocaleData(localeFr);
       primaryColour: '#ffffff', 
       secondaryColour: '#ffffff', 
       tertiaryColour: '#ffffff'
-    })
+    }),
+    LivreurModule
   ],
   providers: [{provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]

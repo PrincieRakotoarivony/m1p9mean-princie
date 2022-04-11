@@ -21,7 +21,8 @@ const CommandeSchema = new mongoose.Schema({
     livreur: {type: mongoose.Schema.Types.ObjectId, ref: 'Utilisateur'},
     etat: {type: Number, enum: Object.values(ETATS_COMMANDE), default: ETATS_COMMANDE.COMMANDEE},
     fraisLivraison: {type: Number, required: true, min: 0},
-    dateCommande: {type: Date, default: Date.now(), required: true }
+    dateCommande: {type: Date, default: Date.now(), required: true },
+    dateLivree: Date
 });
 
 CommandeSchema.methods.genererCommande = async function (produitsQte){
@@ -417,6 +418,44 @@ CommandeSchema.methods.assigner = async function (idLivreur) {
     this.etat = ETATS_COMMANDE.ASSIGNEE_LIVREUR;
     this.save();
 }
+
+CommandeSchema.statics.getCommandesLivreur = async function (crt){
+    const sort = {dateCommande: -1};
+    if(crt.dateMin || crt.dateMax) crt["dateCommande"] = {};
+    if(crt.dateMin) crt["dateCommande"]["$gte"] = parseMoment(crt.dateMin);
+    if(crt.dateMax) crt["dateCommande"]["$lte"] = parseMoment(crt.dateMax);
+    delete crt.dateMin;
+    delete crt.dateMax;
+    const aggregateParams = [
+        {
+            "$match": crt
+        },
+        {
+            $lookup: {
+                from: "utilisateurs",
+                localField: "client",
+                foreignField: "_id",
+                pipeline: [
+                    {$project: {nom: 1, prenom: 1}}
+                ],
+                as: "clientObj"
+            }
+        },
+        {$unwind: "$clientObj"},
+    ];
+
+    var aggr = Commande.aggregate(aggregateParams);
+    if(crt.etat == ETATS_COMMANDE.LIVREE){
+        aggr = aggr.sort({dateLivree: -1}).skip(0).limit(6);
+    } else{
+        aggr = aggr.sort(sort);
+    }
+    
+    const commandes = await aggr.exec();
+    return commandes;
+};
+
+
 
 const Commande = mongoose.model('Commande', CommandeSchema);
 

@@ -39,7 +39,7 @@ const routes: Routes = [
   }, 
   {
     path: 'livreur',
-    component: LivreurComponent,
+    loadChildren: () => import('../livreur/livreur/livreur.module').then(mod => mod.LivreurModule),
     canActivate: [AuthGuardLivreurService]
   }, 
   {

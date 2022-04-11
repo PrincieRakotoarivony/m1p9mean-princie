@@ -2,8 +2,9 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const { Commande, Utilisateur } = require('../models');
 const {responseBuilder, tools} = require('../utils');
+const moment = require('moment');
 const { constantes } = require('../utils');
-const { PROFILE_RESTAURANT, PROFILE_EKALY } = require('../utils/constantes');
+const { PROFILE_RESTAURANT, PROFILE_EKALY, PROFILE_LIVREUR, ETATS_COMMANDE } = require('../utils/constantes');
 const router = express.Router();
 
 router.post('/save', async function(req, res){
@@ -122,6 +123,43 @@ router.get('/:id/assigner', async function(req, res){
         const cmd = await Commande.findById(new mongoose.Types.ObjectId(req.params.id)).exec();
         if(!cmd) throw new Error("Commande invalide");
         await cmd.assigner(new mongoose.Types.ObjectId(req.query.idLivreur));
+        res.json(responseBuilder.success("success"));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
+router.post('/livreur/etat', async function(req, res){
+    try{
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_LIVREUR))
+            throw new Error("Pas d'autorisation");
+        const crt = req.body ? req.body : {};  
+        crt.livreur = u._id;  
+        const commandes = await Commande.getCommandesLivreur(crt);
+        res.json(responseBuilder.success(commandes));
+    } catch(error){
+        console.log(error);
+        res.json(responseBuilder.error(error));
+    }
+});
+
+router.post('/:id/etat-livraison', async function(req, res){
+    try{
+        const token = tools.extractToken(req.headers.authorization);
+        const u = await Utilisateur.findUser(token);
+        if(!u.profile.equals(PROFILE_LIVREUR))
+            throw new Error("Pas d'autorisation");
+        const cmd = await Commande.findById(new mongoose.Types.ObjectId(req.params.id));
+        if(!cmd.livreur.equals(u._id))
+            throw new Error("Pas d'autorisation");
+        cmd.etat = req.query.etat;    
+        if(cmd.etat == ETATS_COMMANDE.LIVREE){
+            cmd.dateLivree = moment();
+        }
+        cmd.save();
         res.json(responseBuilder.success("success"));
     } catch(error){
         console.log(error);

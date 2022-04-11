@@ -1,0 +1,44 @@
+<div class="dd-container">
+    <div class="dd">
+        <h3>Nouvelles livraisons</h3>
+        <ul class="list-group dd-box">
+            <li draggable *ngFor="let item of items[0]; let index = index;" [dragData]="{item: item, fromIndex: 0, itemIndex: index}" class="list-group-item d-flex align-items-center justify-content-between">
+                <div class="">
+                    {{item.clientObj.nom}} {{item.clientObj.prenom}}<br />
+                    <u>Adresse</u>: {{item.adresse}}
+                </div>
+                <i class="fa fa-check fa-lg text-success" aria-hidden="true"></i>
+            </li>
+        </ul>
+    </div>
+    <div droppable class="dd" (onDrop)="onItemDrop($event, 1)">
+        <h3>Livraisons en cours</h3>
+        <ul class="list-group dd-box ">
+            <li draggable *ngFor="let item of items[1]; let index = index;" [dragData]="{item: item, fromIndex: 1, itemIndex: index}" class="list-group-item d-flex align-items-center justify-content-between">
+                <div class="">
+                    {{item.clientObj.nom}} {{item.clientObj.prenom}}<br />
+                    <u>Adresse</u>: {{item.adresse}} 
+                </div>
+                <i class="fa fa-spinner fa-lg loader text-primary" aria-hidden="true" *ngIf="item.load"></i> 
+                <i class="fa fa-check fa-lg text-success" aria-hidden="true" *ngIf="!item.err && !item.load"></i>
+                <i class="fa fa-times fa-lg text-danger" aria-hidden="true" *ngIf="item.err && !item.load"></i>
+            </li>
+        </ul>
+    </div>
+    <div droppable class="dd" (onDrop)="onItemDrop($event, 2)">
+        <h3>Commandes livrées</h3>
+        <ul class="list-group dd-box">
+            <li *ngFor="let item of items[2]" class="list-group-item d-flex align-items-center justify-content-between">
+                <div class="">
+                    {{item.clientObj.nom}} {{item.clientObj.prenom}}<br />
+                    <u>Adresse</u>: {{item.adresse}} <br />
+                    <span *ngIf="item.dateLivree">Livrée le {{formatDate(item.dateLivree)}}</span>
+                </div>
+                <i class="fa fa-spinner fa-lg loader text-primary" aria-hidden="true" *ngIf="item.load"></i> 
+                <i class="fa fa-check fa-lg text-success" aria-hidden="true" *ngIf="!item.err && !item.load"></i>
+                <i class="fa fa-times fa-lg text-danger" aria-hidden="true" *ngIf="item.err && !item.load"></i>
+            </li>
+        </ul>
+    </div>
+    
+</div>

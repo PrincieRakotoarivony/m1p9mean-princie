@@ -62,4 +62,13 @@ export class CommandeService {
     return this.http.get(url, this.toolsService.getRequestOptions(true));
   }
 
+  findCommandesLivreur(params: any){
+    const url = `${this.URL}/livreur/etat`;
+    return this.http.post(url, params, this.toolsService.getRequestOptions(true));
+  }
+
+  setEtatLivraison(idCmd: string, etat: number){
+    const url = `${this.URL}/${idCmd}/etat-livraison?etat=${etat}`;
+    return this.http.post(url, {}, this.toolsService.getRequestOptions(true));
+  }
 }

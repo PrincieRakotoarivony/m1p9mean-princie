@@ -57,7 +57,11 @@ export class AppComponent implements OnInit{
       }
     ],
     [AuthService.PROFILE.LIVREUR]: [
-      
+      {
+        nom: 'COMMANDES',
+        lien: '/',
+        active: true
+      },
     ],
     [AuthService.PROFILE.EKALY]: [
       {
